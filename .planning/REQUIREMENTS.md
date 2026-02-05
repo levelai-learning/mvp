@@ -118,55 +118,55 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | TBD | Pending |
-| AUTH-02 | TBD | Pending |
-| AUTH-03 | TBD | Pending |
-| AUTH-04 | TBD | Pending |
-| AUTH-05 | TBD | Pending |
-| AUTH-06 | TBD | Pending |
-| AUTH-07 | TBD | Pending |
-| STUD-01 | TBD | Pending |
-| STUD-02 | TBD | Pending |
-| STUD-03 | TBD | Pending |
-| STUD-04 | TBD | Pending |
-| STUD-05 | TBD | Pending |
-| STUD-06 | TBD | Pending |
-| STUD-07 | TBD | Pending |
-| STUD-08 | TBD | Pending |
-| STUD-09 | TBD | Pending |
-| STUD-10 | TBD | Pending |
-| STUD-11 | TBD | Pending |
-| STUD-12 | TBD | Pending |
-| STUD-13 | TBD | Pending |
-| STUD-14 | TBD | Pending |
-| TCHR-01 | TBD | Pending |
-| TCHR-02 | TBD | Pending |
-| TCHR-03 | TBD | Pending |
-| TCHR-04 | TBD | Pending |
-| TCHR-05 | TBD | Pending |
-| TCHR-06 | TBD | Pending |
-| TCHR-07 | TBD | Pending |
-| TCHR-08 | TBD | Pending |
-| PRNT-01 | TBD | Pending |
-| PRNT-02 | TBD | Pending |
-| PRNT-03 | TBD | Pending |
-| PRNT-04 | TBD | Pending |
-| PRNT-05 | TBD | Pending |
-| PRNT-06 | TBD | Pending |
-| DSGN-01 | TBD | Pending |
-| DSGN-02 | TBD | Pending |
-| DSGN-03 | TBD | Pending |
-| DSGN-04 | TBD | Pending |
-| DSGN-05 | TBD | Pending |
-| CONT-01 | TBD | Pending |
-| CONT-02 | TBD | Pending |
-| CONT-03 | TBD | Pending |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Pending |
+| AUTH-05 | Phase 1 | Pending |
+| AUTH-06 | Phase 1 | Pending |
+| AUTH-07 | Phase 1 | Pending |
+| STUD-01 | Phase 2 | Pending |
+| STUD-02 | Phase 2 | Pending |
+| STUD-03 | Phase 2 | Pending |
+| STUD-04 | Phase 2 | Pending |
+| STUD-05 | Phase 2 | Pending |
+| STUD-06 | Phase 2 | Pending |
+| STUD-07 | Phase 2 | Pending |
+| STUD-08 | Phase 2 | Pending |
+| STUD-09 | Phase 2 | Pending |
+| STUD-10 | Phase 2 | Pending |
+| STUD-11 | Phase 2 | Pending |
+| STUD-12 | Phase 2 | Pending |
+| STUD-13 | Phase 2 | Pending |
+| STUD-14 | Phase 2 | Pending |
+| TCHR-01 | Phase 3 | Pending |
+| TCHR-02 | Phase 3 | Pending |
+| TCHR-03 | Phase 3 | Pending |
+| TCHR-04 | Phase 3 | Pending |
+| TCHR-05 | Phase 3 | Pending |
+| TCHR-06 | Phase 3 | Pending |
+| TCHR-07 | Phase 3 | Pending |
+| TCHR-08 | Phase 3 | Pending |
+| PRNT-01 | Phase 4 | Pending |
+| PRNT-02 | Phase 4 | Pending |
+| PRNT-03 | Phase 4 | Pending |
+| PRNT-04 | Phase 4 | Pending |
+| PRNT-05 | Phase 4 | Pending |
+| PRNT-06 | Phase 4 | Pending |
+| DSGN-01 | Phase 1 | Pending |
+| DSGN-02 | Phase 1 | Pending |
+| DSGN-03 | Phase 1 | Pending |
+| DSGN-04 | Phase 1 | Pending |
+| DSGN-05 | Phase 1 | Pending |
+| CONT-01 | Phase 5 | Pending |
+| CONT-02 | Phase 5 | Pending |
+| CONT-03 | Phase 5 | Pending |
 
 **Coverage:**
-- v1 requirements: 40 total
-- Mapped to phases: 0 (awaiting roadmap)
-- Unmapped: 40
+- v1 requirements: 43 total
+- Mapped to phases: 43
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-04*
-*Last updated: 2026-02-04 after initial definition*
+*Last updated: 2026-02-04 after roadmap creation*
