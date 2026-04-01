@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take a Break — LevelAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<nav class="topnav">
+  <a href="/home.html" class="topnav__logo">
+    <div class="topnav__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </a>
+
+  <div class="topnav__nav">
+    <a href="/home.html"     class="">Home</a>
+    <a href="/task.html"     class="">Tasks</a>
+    <a href="/schedule.html" class="">Schedule</a>
+    <a href="/settings.html" class="">Settings</a>
+  </div>
+
+  <div class="topnav__controls">
+    <button class="topnav__font-btn" data-font-btn>Change Font to Open Dyslexic</button>
+
+    <div class="theme-toggle">
+      <span>Light</span>
+      <div class="theme-toggle__track" data-theme-track>
+        <div class="theme-toggle__thumb"></div>
+      </div>
+      <span>Dark</span>
+    </div>
+
+    <span class="topnav__datetime" data-clock></span>
+
+    <a href="/break.html" class="btn-break active">
+      In Break Mode    </a>
+
+    <div class="topnav__user">
+      <div class="topnav__user-info">
+        <div class="topnav__user-name" data-name>Alex</div>
+        <div class="topnav__user-role">Student</div>
+      </div>
+      <div class="topnav__avatar-placeholder" data-user-avatar>👤</div>
+    </div>
+  </div>
+</nav>
+
+<main class="break-page fade-in">
+
+  <div class="break-hero">
+    <div class="break-hero__icon">🌿</div>
+    <h1 class="break-hero__title">Time to Unwind</h1>
+    <p class="break-hero__desc">
+      You've earned a break. Choose a quick activity to reset your mind and body.
+    </p>
+  </div>
+
+  <div class="break-grid">
+
+    <div class="break-option" data-break-option>
+      <div class="break-option__icon" style="background:var(--color-blue-light);">
+        <span style="font-size:1.75rem;">⬛</span>
+      </div>
+      <div class="break-option__title">Box Breathing</div>
+      <div class="break-option__desc">4 sec in, hold, out, hold</div>
+    </div>
+
+    <div class="break-option" data-break-option>
+      <div class="break-option__icon" style="background:var(--color-blue-light);">
+        <span style="font-size:1.75rem;">💨</span>
+      </div>
+      <div class="break-option__title">4-7-8 Breathing</div>
+      <div class="break-option__desc">4 sec in, 7 hold, 8 out</div>
+    </div>
+
+    <div class="break-option" data-break-option>
+      <div class="break-option__icon" style="background:var(--color-purple-light);">
+        <span style="font-size:1.75rem;">👁️</span>
+      </div>
+      <div class="break-option__title">Eye Tracking</div>
+      <div class="break-option__desc">Focus on slow moving target</div>
+    </div>
+
+    <div class="break-option" data-break-option>
+      <div class="break-option__icon" style="background:var(--color-green-light);">
+        <span style="font-size:1.75rem;">🚶</span>
+      </div>
+      <div class="break-option__title">Balance Movements</div>
+      <div class="break-option__desc">Standing exercises</div>
+    </div>
+
+    <div class="break-option" data-break-option>
+      <div class="break-option__icon" style="background:var(--color-purple-light);">
+        <span style="font-size:1.75rem;">🌙</span>
+      </div>
+      <div class="break-option__title">Quiet Space</div>
+      <div class="break-option__desc">Dim screen, low noise</div>
+    </div>
+
+  </div>
+
+  <div class="break-return">
+    <a href="/home.html" class="btn btn-outline btn-lg" style="border-radius:var(--radius-full);">
+      ← Return to Dashboard
+    </a>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__logo">
+    <div class="footer__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </div>
+  <div class="footer__links">
+    <a href="#">Help Center</a>
+    <a href="#">Accessibility</a>
+    <a href="/settings.html">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+  </div>
+  <span>&copy; 2026 LevelAI. All rights reserved.</span>
+</footer>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

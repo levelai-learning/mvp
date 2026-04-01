@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Preferred Name — LevelAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<nav class="topnav">
+  <a href="/index.html" class="topnav__logo">
+    <div class="topnav__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </a>
+
+  <div class="topnav__controls">
+    <button class="topnav__font-btn" data-font-btn>Change Font to Open Dyslexic</button>
+
+    <div class="theme-toggle">
+      <span>Light</span>
+      <div class="theme-toggle__track" data-theme-track>
+        <div class="theme-toggle__thumb"></div>
+      </div>
+      <span>Dark</span>
+    </div>
+
+    <span class="topnav__datetime" data-clock></span>
+  </div>
+</nav>
+
+<main class="onboard-wrap fade-in">
+  <div class="onboard-card">
+
+    <button class="onboard-close" onclick="window.location='/index.php'" aria-label="Skip setup">×</button>
+
+    <div class="onboard-step-header">
+      <div class="onboard-step-badge">2</div>
+      <div class="onboard-step-label">Step 2 of 5</div>
+    </div>
+
+    <h1 class="onboard-title">What should we call you?</h1>
+    <p class="onboard-subtitle">
+      This is the name we'll use across your dashboard and notifications to make you feel at home.
+    </p>
+
+    <form data-step2-form>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label class="form-label" for="preferredName">Preferred Name</label>
+        <input
+          class="form-input"
+          type="text"
+          id="preferredName"
+          name="preferredName"
+          placeholder="e.g. Alex, JJ, or your first name"
+          autocomplete="nickname"
+          required
+        >
+      </div>
+      <p class="form-hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:var(--color-blue)">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+        You can always change this later in settings.
+      </p>
+
+      <div class="onboard-footer">
+        <a href="/onboard/step1.html" class="onboard-back">← Back</a>
+        <button type="submit" class="btn btn-primary" data-next-btn disabled>
+          Next Step →
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+  <div class="onboard-scroll-hint">
+    <span>Complete form to continue</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer__logo">
+    <div class="footer__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </div>
+  <div class="footer__links">
+    <a href="#">Help Center</a>
+    <a href="#">Accessibility</a>
+    <a href="/settings.html">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+  </div>
+  <span>&copy; 2026 LevelAI. All rights reserved.</span>
+</footer>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

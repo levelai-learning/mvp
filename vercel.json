@@ -1,0 +1,16 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/onboard/step1", "destination": "/onboard/step1.html" },
+    { "source": "/onboard/step2", "destination": "/onboard/step2.html" },
+    { "source": "/onboard/step3", "destination": "/onboard/step3.html" },
+    { "source": "/onboard/step4", "destination": "/onboard/step4.html" },
+    { "source": "/onboard/step5", "destination": "/onboard/step5.html" },
+    { "source": "/home",          "destination": "/home.html" },
+    { "source": "/schedule",      "destination": "/schedule.html" },
+    { "source": "/task",          "destination": "/task.html" },
+    { "source": "/break",         "destination": "/break.html" },
+    { "source": "/settings",      "destination": "/settings.html" }
+  ]
+}

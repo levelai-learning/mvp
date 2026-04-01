@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Avatar — LevelAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<nav class="topnav">
+  <a href="/index.html" class="topnav__logo">
+    <div class="topnav__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </a>
+
+  <div class="topnav__controls">
+    <button class="topnav__font-btn" data-font-btn>Change Font to Open Dyslexic</button>
+
+    <div class="theme-toggle">
+      <span>Light</span>
+      <div class="theme-toggle__track" data-theme-track>
+        <div class="theme-toggle__thumb"></div>
+      </div>
+      <span>Dark</span>
+    </div>
+
+    <span class="topnav__datetime" data-clock></span>
+  </div>
+</nav>
+
+<main class="onboard-wrap fade-in">
+  <div class="onboard-card" style="max-width:600px;">
+
+    <button class="onboard-close" onclick="window.location='/index.php'" aria-label="Skip setup">×</button>
+
+    <div class="onboard-step-header">
+      <div class="onboard-step-badge">3</div>
+      <div class="onboard-step-label">Step 3 of 5</div>
+    </div>
+
+    <h1 class="onboard-title">Choose your avatar</h1>
+    <p class="onboard-subtitle">Pick a friendly face to personalize your dashboard.</p>
+
+    <div class="avatar-grid" style="margin-bottom:16px;">
+      <!-- Upload option -->
+      <div class="avatar-option avatar-upload" style="aspect-ratio:1;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <span>Upload</span>
+      </div>
+
+              <div
+          class="avatar-option"
+          data-avatar-option
+          data-emoji="🐱"
+          data-bg="#A855F7"
+          aria-label="Purple Cat"
+          role="radio"
+        >
+          <div class="avatar-circle" style="background:#A855F7;">
+            <span style="font-size:1.5rem;">🐱</span>
+          </div>
+        </div>
+              <div
+          class="avatar-option"
+          data-avatar-option
+          data-emoji="🐟"
+          data-bg="#3B82F6"
+          aria-label="Blue Fish"
+          role="radio"
+        >
+          <div class="avatar-circle" style="background:#3B82F6;">
+            <span style="font-size:1.5rem;">🐟</span>
+          </div>
+        </div>
+              <div
+          class="avatar-option"
+          data-avatar-option
+          data-emoji="🐿️"
+          data-bg="#22C55E"
+          aria-label="Green Squirrel"
+          role="radio"
+        >
+          <div class="avatar-circle" style="background:#22C55E;">
+            <span style="font-size:1.5rem;">🐿️</span>
+          </div>
+        </div>
+              <div
+          class="avatar-option"
+          data-avatar-option
+          data-emoji="💙"
+          data-bg="#EC4899"
+          aria-label="Pink Heart"
+          role="radio"
+        >
+          <div class="avatar-circle" style="background:#EC4899;">
+            <span style="font-size:1.5rem;">💙</span>
+          </div>
+        </div>
+              <div
+          class="avatar-option"
+          data-avatar-option
+          data-emoji="⭐"
+          data-bg="#EAB308"
+          aria-label="Gold Star"
+          role="radio"
+        >
+          <div class="avatar-circle" style="background:#EAB308;">
+            <span style="font-size:1.5rem;">⭐</span>
+          </div>
+        </div>
+              <div
+          class="avatar-option"
+          data-avatar-option
+          data-emoji="🚀"
+          data-bg="#14B8A6"
+          aria-label="Teal Rocket"
+          role="radio"
+        >
+          <div class="avatar-circle" style="background:#14B8A6;">
+            <span style="font-size:1.5rem;">🚀</span>
+          </div>
+        </div>
+              <div
+          class="avatar-option"
+          data-avatar-option
+          data-emoji="🔥"
+          data-bg="#EF4444"
+          aria-label="Red Flame"
+          role="radio"
+        >
+          <div class="avatar-circle" style="background:#EF4444;">
+            <span style="font-size:1.5rem;">🔥</span>
+          </div>
+        </div>
+              <div
+          class="avatar-option"
+          data-avatar-option
+          data-emoji="🌙"
+          data-bg="#6366F1"
+          aria-label="Indigo Moon"
+          role="radio"
+        >
+          <div class="avatar-circle" style="background:#6366F1;">
+            <span style="font-size:1.5rem;">🌙</span>
+          </div>
+        </div>
+              <div
+          class="avatar-option"
+          data-avatar-option
+          data-emoji="🌊"
+          data-bg="#0EA5E9"
+          aria-label="Sky Wave"
+          role="radio"
+        >
+          <div class="avatar-circle" style="background:#0EA5E9;">
+            <span style="font-size:1.5rem;">🌊</span>
+          </div>
+        </div>
+          </div>
+
+    <div class="onboard-footer">
+      <a href="/onboard/step2.html" class="onboard-back">← Back</a>
+      <button
+        class="btn btn-primary"
+        data-next-btn
+        disabled
+        onclick="window.location='/onboard/step4.php'"
+      >
+        Next Step →
+      </button>
+    </div>
+
+  </div>
+
+  <div class="onboard-scroll-hint">
+    <span>Select an avatar to continue</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer__logo">
+    <div class="footer__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </div>
+  <div class="footer__links">
+    <a href="#">Help Center</a>
+    <a href="#">Accessibility</a>
+    <a href="/settings.html">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+  </div>
+  <span>&copy; 2026 LevelAI. All rights reserved.</span>
+</footer>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>
