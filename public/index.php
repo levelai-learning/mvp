@@ -1,0 +1,29 @@
+<?php
+$pageTitle = 'Welcome';
+include 'includes/head.php';
+include 'includes/nav-onboard.php';
+?>
+
+<main class="hero-wrap fade-in" style="position:relative;">
+  <div class="hero-icon">🌿</div>
+
+  <h1 class="hero-title">Welcome to a calmer way to learn.</h1>
+
+  <p class="hero-desc">
+    LevelAI is designed to support your focus and adapt to how you learn best.
+    Let's set up your space.
+  </p>
+
+  <a href="/onboard/step1.php" class="btn btn-primary btn-lg">
+    Start <span style="margin-left:4px;">→</span>
+  </a>
+
+  <div class="hero-scroll-hint" style="margin-top:60px;">
+    <span>Scroll to begin</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</main>
+
+<?php include 'includes/footer.php'; ?>
