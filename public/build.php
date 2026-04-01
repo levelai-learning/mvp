@@ -32,11 +32,11 @@ foreach ($pages as [$out, $src, $vars]) {
   include __DIR__ . '/' . $src;
   $html = ob_get_clean();
 
-  // Rewrite .php links to .html
+  // Rewrite ALL .php references to .html (href, onclick, window.location)
   $html = preg_replace('/href="([^"]*?)\.php([^"]*?)"/i', 'href="$1.html$2"', $html);
   $html = preg_replace("/href='([^']*?)\.php([^']*?)'/i", "href='$1.html$2'", $html);
-  // Also fix JS redirects
-  $html = str_replace("window.location.href = '/index.php'", "window.location.href = '/index.html'", $html);
+  $html = preg_replace("/\.php'/", ".html'", $html);
+  $html = preg_replace('/\.php"/', '.html"', $html);
   $html = str_replace("window.location.href = '/home.php'", "window.location.href = '/home.html'", $html);
   $html = str_replace("window.location.href = '/onboard/step2.php'", "window.location.href = '/onboard/step2.html'", $html);
   $html = str_replace("window.location.href = '/onboard/step3.php'", "window.location.href = '/onboard/step3.html'", $html);
