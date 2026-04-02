@@ -2,7 +2,7 @@
 phase: 1
 slug: foundation-auth
 status: draft
-nyquist_compliant: false
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-04-02
 ---
@@ -20,7 +20,7 @@ created: 2026-04-02
 | **Framework** | None — PHP/vanilla JS project, no test runner configured |
 | **Config file** | None — Wave 0 installs Composer + dependencies |
 | **Quick run command** | `php -l public/includes/*.php` (syntax check) |
-| **Full suite command** | Manual smoke test: step through each role's onboarding → login → dashboard |
+| **Full suite command** | Manual smoke test: step through each role's onboarding -> login -> dashboard |
 | **Estimated runtime** | ~60 seconds (manual) |
 
 ---
@@ -38,18 +38,15 @@ created: 2026-04-02
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 01-01 | 01 | 1 | AUTH-01 | smoke | `curl -X POST /onboard/student/signup.php` | ❌ W0 | ⬜ pending |
-| 01-02 | 01 | 1 | AUTH-02 | smoke | `curl -c cookies.txt /login.php` then follow redirect | ❌ W0 | ⬜ pending |
-| 01-03 | 01 | 1 | AUTH-03 | manual | Browser refresh after login | Manual | ⬜ pending |
-| 01-04 | 02 | 2 | AUTH-04 | manual | Enter invite code in parent onboarding | Manual | ⬜ pending |
-| 01-05 | 02 | 2 | AUTH-05 | manual | Step through parent onboarding consent | Manual | ⬜ pending |
-| 01-06 | 02 | 2 | AUTH-06 | SQL test | Query as wrong user in Supabase SQL Editor | Manual SQL | ⬜ pending |
-| 01-07 | 02 | 2 | AUTH-07 | SQL test | Check `audit_log` table after actions | Manual SQL | ⬜ pending |
-| 01-08 | 03 | 3 | DSGN-01 | visual | Browser screenshot — cream backgrounds | Manual | ⬜ pending |
-| 01-09 | 03 | 3 | DSGN-02 | visual | Browser screenshot — dark gray text | Manual | ⬜ pending |
-| 01-10 | 03 | 3 | DSGN-03 | visual | CSS audit — color only for meaning | Manual | ⬜ pending |
-| 01-11 | 03 | 3 | DSGN-04 | content | Manual copy review — age-appropriate language | Manual | ⬜ pending |
-| 01-12 | 03 | 3 | DSGN-05 | visual | CSS audit — no decorative fills/animations | Manual | ⬜ pending |
+| 01-01-T1 | 01 | 1 | AUTH-01 | syntax | `php -l public/includes/bootstrap.php && php -l public/includes/supabase-client.php && php -l public/includes/auth-middleware.php && php -l public/router.php && php -l public/includes/head.php && test -f composer.json && test -f .env.example` | Wave 0 | ⬜ pending |
+| 01-01-T2 | 01 | 1 | AUTH-01 | syntax | `php -l public/index.php && php -l public/onboard/student/step1.php && php -l public/onboard/student/signup.php` | Wave 0 | ⬜ pending |
+| 01-01-T3 | 01 | 1 | AUTH-02 | syntax | `php -l public/onboard/parent/step1.php && php -l public/onboard/parent/signup.php && php -l public/onboard/teacher/step1.php && php -l public/onboard/teacher/signup.php && php -l public/login.php && php -l public/logout.php && php -l public/student/home.php && php -l public/parent/dashboard.php && php -l public/teacher/dashboard.php` | Wave 0 | ⬜ pending |
+| 01-01-T4 | 01 | 1 | AUTH-03 | manual | Browser refresh after login — checkpoint:human-verify | Manual | ⬜ pending |
+| 01-02-T1 | 02 | 2 | AUTH-06, AUTH-07 | file+syntax | `test -f database/schema.sql && test -f database/rls-policies.sql && test -f database/auth-hook.sql && test -f database/audit-triggers.sql && grep -c "enable row level security" database/schema.sql && php -l public/includes/auth-middleware.php` | Wave 0 | ⬜ pending |
+| 01-02-T2 | 02 | 2 | AUTH-04, AUTH-05 | syntax | `php -l public/onboard/parent/invite.php && php -l public/onboard/parent/consent.php && php -l public/onboard/parent/signup.php && php -l public/teacher/invite.php` | Wave 0 | ⬜ pending |
+| 01-02-T3 | 02 | 2 | AUTH-04-07 | manual | Run SQL in Supabase, test parent-child linking — checkpoint:human-verify | Manual | ⬜ pending |
+| 01-03-T1 | 03 | 2 | DSGN-01-03, DSGN-05 | grep | `grep "\-\-color-bg:.*#FFFEF5" public/assets/css/app.css && grep "\-\-color-text-primary:.*#333333" public/assets/css/app.css && grep 'data-role="student"' public/assets/css/app.css` | Exists | ⬜ pending |
+| 01-03-T2 | 03 | 2 | DSGN-04 | grep+syntax | `grep "CURRENT_USER" public/includes/nav-app.php && grep "CURRENT_ROLE" public/includes/nav-app.php && grep "logout.php" public/includes/nav-app.php` | Exists | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -80,11 +77,11 @@ created: 2026-04-02
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 60s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 60s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** ready

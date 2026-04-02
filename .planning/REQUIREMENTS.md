@@ -108,9 +108,10 @@ Explicitly excluded. Documented to prevent scope creep.
 | Multi-language support | English only for MVP |
 | Third-party LMS integrations | Standalone for MVP; API design anticipates future connections |
 | Competitive leaderboards | Research shows these discourage struggling learners |
-| "Dyslexia fonts" (OpenDyslexic) | No proven benefit; may reduce reading speed |
 | Real-time messaging | Async messaging sufficient for demo |
 | Full curriculum integration | Demo uses 3-5 self-created lessons |
+
+> **Note:** OpenDyslexic font toggle was originally listed here but reinstated per user decision D-12 during Phase 1 context discussion. It is included as an accessibility option in DSGN scope (Plan 01-03).
 
 ## Traceability
 
@@ -169,4 +170,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-04*
-*Last updated: 2026-02-04 after roadmap creation*
+*Last updated: 2026-04-02 after Phase 1 plan revision (D-12 override)*
