@@ -1,0 +1,217 @@
+<?php
+$pageTitle   = 'Classroom';
+$currentPage = 'dashboard';
+include __DIR__ . '/../includes/head.php';
+include __DIR__ . '/../includes/nav-teacher.php';
+?>
+
+<main class="page-wrapper page-wrapper--full fade-in">
+
+  <!-- Page Header -->
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;">
+    <div>
+      <h1 class="page-title">Classroom Overview</h1>
+      <p class="page-subtitle" style="margin-bottom:0;">Period 3 &mdash; 7th Grade ELA &amp; Math &bull; 12 students</p>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:6px;">
+      <button class="btn btn-primary" style="--btn-bg:var(--color-teacher-accent,#4A6FA5);--btn-hover:var(--color-teacher-accent-hover,#3B5C8A);">+ Assign Lesson</button>
+    </div>
+  </div>
+
+  <!-- Dashboard Grid -->
+  <div class="dashboard-grid">
+
+    <!-- Left Column: Student Roster -->
+    <div>
+
+      <!-- At-a-Glance Stats -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;">
+        <div class="widget-card" style="text-align:center;padding:20px;">
+          <div style="font-size:2rem;font-weight:800;color:var(--color-green);">9</div>
+          <div style="font-size:0.8125rem;color:var(--color-text-secondary);">On Track</div>
+        </div>
+        <div class="widget-card" style="text-align:center;padding:20px;">
+          <div style="font-size:2rem;font-weight:800;color:var(--color-orange);">2</div>
+          <div style="font-size:0.8125rem;color:var(--color-text-secondary);">Needs Attention</div>
+        </div>
+        <div class="widget-card" style="text-align:center;padding:20px;">
+          <div style="font-size:2rem;font-weight:800;color:var(--color-blue);">1</div>
+          <div style="font-size:0.8125rem;color:var(--color-text-secondary);">On Break</div>
+        </div>
+      </div>
+
+      <!-- Student List -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center;">
+          <h2 style="font-size:1.0625rem;font-weight:700;margin:0;">Students</h2>
+          <span style="font-size:0.8125rem;color:var(--color-text-muted);">12 enrolled</span>
+        </div>
+
+        <table style="width:100%;border-collapse:collapse;font-size:0.875rem;">
+          <thead>
+            <tr style="background:var(--color-bg);border-bottom:1px solid var(--color-border);">
+              <th style="text-align:left;padding:10px 20px;font-weight:600;color:var(--color-text-secondary);">Student</th>
+              <th style="text-align:left;padding:10px 16px;font-weight:600;color:var(--color-text-secondary);">Current Task</th>
+              <th style="text-align:center;padding:10px 16px;font-weight:600;color:var(--color-text-secondary);">Progress</th>
+              <th style="text-align:center;padding:10px 16px;font-weight:600;color:var(--color-text-secondary);">Breaks Today</th>
+              <th style="text-align:center;padding:10px 20px;font-weight:600;color:var(--color-text-secondary);">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:12px 20px;"><span style="margin-right:8px;">😊</span> Alex Chen</td>
+              <td style="padding:12px 16px;color:var(--color-text-secondary);">Algebra: Linear Equations</td>
+              <td style="padding:12px 16px;text-align:center;">
+                <div class="progress-bar-wrap" style="width:80px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:75%;"></div></div>
+                <span style="margin-left:6px;font-size:0.75rem;">75%</span>
+              </td>
+              <td style="text-align:center;padding:12px 16px;">1</td>
+              <td style="text-align:center;padding:12px 20px;"><span style="display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;background:var(--color-green-light);color:var(--color-green);">Active</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:12px 20px;"><span style="margin-right:8px;">🎨</span> Maya Johnson</td>
+              <td style="padding:12px 16px;color:var(--color-text-secondary);">Reading: Chapter 4</td>
+              <td style="padding:12px 16px;text-align:center;">
+                <div class="progress-bar-wrap" style="width:80px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:100%;"></div></div>
+                <span style="margin-left:6px;font-size:0.75rem;">100%</span>
+              </td>
+              <td style="text-align:center;padding:12px 16px;">0</td>
+              <td style="text-align:center;padding:12px 20px;"><span style="display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;background:var(--color-green-light);color:var(--color-green);">Complete</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:12px 20px;"><span style="margin-right:8px;">🚀</span> Jordan Williams</td>
+              <td style="padding:12px 16px;color:var(--color-text-secondary);">Science: Ecosystems</td>
+              <td style="padding:12px 16px;text-align:center;">
+                <div class="progress-bar-wrap" style="width:80px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:40%;"></div></div>
+                <span style="margin-left:6px;font-size:0.75rem;">40%</span>
+              </td>
+              <td style="text-align:center;padding:12px 16px;">3</td>
+              <td style="text-align:center;padding:12px 20px;"><span style="display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;background:var(--color-orange-light);color:var(--color-orange);">Needs Help</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:12px 20px;"><span style="margin-right:8px;">🌟</span> Sam Patel</td>
+              <td style="padding:12px 16px;color:var(--color-text-secondary);">Writing: Essay Draft</td>
+              <td style="padding:12px 16px;text-align:center;">
+                <div class="progress-bar-wrap" style="width:80px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:60%;"></div></div>
+                <span style="margin-left:6px;font-size:0.75rem;">60%</span>
+              </td>
+              <td style="text-align:center;padding:12px 16px;">1</td>
+              <td style="text-align:center;padding:12px 20px;"><span style="display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;background:var(--color-green-light);color:var(--color-green);">Active</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:12px 20px;"><span style="margin-right:8px;">🎵</span> Lily Okafor</td>
+              <td style="padding:12px 16px;color:var(--color-text-muted);font-style:italic;">On break</td>
+              <td style="padding:12px 16px;text-align:center;">
+                <div class="progress-bar-wrap" style="width:80px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:50%;"></div></div>
+                <span style="margin-left:6px;font-size:0.75rem;">50%</span>
+              </td>
+              <td style="text-align:center;padding:12px 16px;">2</td>
+              <td style="text-align:center;padding:12px 20px;"><span style="display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;background:var(--color-blue-light);color:var(--color-blue);">On Break</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:12px 20px;"><span style="margin-right:8px;">⚡</span> Ethan Morales</td>
+              <td style="padding:12px 16px;color:var(--color-text-secondary);">Math: Fractions Review</td>
+              <td style="padding:12px 16px;text-align:center;">
+                <div class="progress-bar-wrap" style="width:80px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:90%;"></div></div>
+                <span style="margin-left:6px;font-size:0.75rem;">90%</span>
+              </td>
+              <td style="text-align:center;padding:12px 16px;">0</td>
+              <td style="text-align:center;padding:12px 20px;"><span style="display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;background:var(--color-green-light);color:var(--color-green);">Active</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:12px 20px;"><span style="margin-right:8px;">🌻</span> Ava Thompson</td>
+              <td style="padding:12px 16px;color:var(--color-text-secondary);">Reading: Vocabulary</td>
+              <td style="padding:12px 16px;text-align:center;">
+                <div class="progress-bar-wrap" style="width:80px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:25%;"></div></div>
+                <span style="margin-left:6px;font-size:0.75rem;">25%</span>
+              </td>
+              <td style="text-align:center;padding:12px 16px;">4</td>
+              <td style="text-align:center;padding:12px 20px;"><span style="display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;background:var(--color-orange-light);color:var(--color-orange);">Needs Help</span></td>
+            </tr>
+            <tr>
+              <td style="padding:12px 20px;"><span style="margin-right:8px;">🎮</span> Noah Kim</td>
+              <td style="padding:12px 16px;color:var(--color-text-secondary);">Science: Lab Report</td>
+              <td style="padding:12px 16px;text-align:center;">
+                <div class="progress-bar-wrap" style="width:80px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:55%;"></div></div>
+                <span style="margin-left:6px;font-size:0.75rem;">55%</span>
+              </td>
+              <td style="text-align:center;padding:12px 16px;">1</td>
+              <td style="text-align:center;padding:12px 20px;"><span style="display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;background:var(--color-green-light);color:var(--color-green);">Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Widgets -->
+    <div>
+
+      <!-- Today's Assignments -->
+      <div class="widget-card">
+        <div class="widget-title">Today's Assignments</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="padding:12px;border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface);">
+            <div style="font-weight:600;font-size:0.875rem;margin-bottom:4px;">Algebra: Linear Equations</div>
+            <div style="font-size:0.8125rem;color:var(--color-text-secondary);display:flex;justify-content:space-between;">
+              <span>8 assigned</span>
+              <span style="color:var(--color-green);font-weight:600;">3 complete</span>
+            </div>
+          </div>
+          <div style="padding:12px;border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface);">
+            <div style="font-weight:600;font-size:0.875rem;margin-bottom:4px;">Reading: Chapter 4 Review</div>
+            <div style="font-size:0.8125rem;color:var(--color-text-secondary);display:flex;justify-content:space-between;">
+              <span>12 assigned</span>
+              <span style="color:var(--color-green);font-weight:600;">7 complete</span>
+            </div>
+          </div>
+          <div style="padding:12px;border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface);">
+            <div style="font-weight:600;font-size:0.875rem;margin-bottom:4px;">Science: Ecosystems Quiz</div>
+            <div style="font-size:0.8125rem;color:var(--color-text-secondary);display:flex;justify-content:space-between;">
+              <span>12 assigned</span>
+              <span style="color:var(--color-text-muted);">Not started</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Class Break Patterns -->
+      <div class="widget-card">
+        <div class="widget-title">Break Activity</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.875rem;">Total breaks today</span>
+            <span style="font-weight:700;font-size:1.125rem;">12</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.875rem;">Avg per student</span>
+            <span style="font-weight:700;font-size:1.125rem;">1.5</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.875rem;">Most frequent type</span>
+            <span style="font-weight:600;font-size:0.875rem;">Breathing</span>
+          </div>
+          <div style="border-top:1px solid var(--color-border);padding-top:10px;margin-top:4px;">
+            <div style="font-size:0.8125rem;color:var(--color-text-secondary);margin-bottom:6px;">Students needing support:</div>
+            <div style="font-size:0.875rem;"><span style="margin-right:6px;">🌻</span> Ava T. &mdash; 4 breaks</div>
+            <div style="font-size:0.875rem;margin-top:4px;"><span style="margin-right:6px;">🚀</span> Jordan W. &mdash; 3 breaks</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="widget-card">
+        <div class="widget-title">Quick Actions</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <button class="btn btn-outline w-full" style="justify-content:center;">Send Class Break</button>
+          <button class="btn btn-outline w-full" style="justify-content:center;">Message All Parents</button>
+          <button class="btn btn-outline w-full" style="justify-content:center;">Export Progress Report</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>

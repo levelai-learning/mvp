@@ -4,6 +4,8 @@
     <span>LevelAI</span>
   </div>
   <div class="footer__links">
+    <a href="/teacher/dashboard.php">Teacher</a>
+    <a href="/parent/dashboard.php">Parent</a>
     <a href="#">Help Center</a>
     <a href="#">Accessibility</a>
     <a href="/settings.php">Privacy Policy</a>

@@ -1959,3 +1959,38 @@ input, textarea, select { font: inherit; }
 }
 
 .fade-in { animation: fadeIn 0.3s ease both; }
+
+/* ============================================================
+   Role-Specific Accent Colors (Teacher / Parent)
+   ============================================================ */
+.topnav--teacher .topnav__nav a.active {
+  color: var(--color-blue);
+  border-bottom-color: var(--color-blue);
+}
+.topnav--teacher .topnav__user-role {
+  color: var(--color-blue);
+}
+.topnav--teacher .btn-primary,
+.topnav--teacher + main .btn-primary {
+  background: var(--color-blue);
+  border-color: var(--color-blue);
+}
+.topnav--teacher + main .btn-primary:hover {
+  background: #3B5C8A;
+}
+
+.topnav--parent .topnav__nav a.active {
+  color: var(--color-purple);
+  border-bottom-color: var(--color-purple);
+}
+.topnav--parent .topnav__user-role {
+  color: var(--color-purple);
+}
+.topnav--parent .btn-primary,
+.topnav--parent + main .btn-primary {
+  background: var(--color-purple);
+  border-color: var(--color-purple);
+}
+.topnav--parent + main .btn-primary:hover {
+  background: #644B8A;
+}

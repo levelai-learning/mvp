@@ -23,6 +23,15 @@ if (preg_match('/\.(css|js|png|jpg|jpeg|gif|svg|ico|woff2?|ttf)$/', $uri)) {
     return false; // Let built-in server handle static files
 }
 
+// Role dashboard paths: /teacher/dashboard, /parent/dashboard
+if (preg_match('#^/(teacher|parent)/([a-z]+)(?:\.php)?$#', $uri, $m)) {
+    $file = __DIR__ . '/' . $m[1] . '/' . $m[2] . '.php';
+    if (file_exists($file)) {
+        include $file;
+        return true;
+    }
+}
+
 // Top-level PHP pages
 $allowed = ['index', 'home', 'schedule', 'task', 'break', 'settings'];
 $page    = trim($uri, '/') ?: 'index';
