@@ -30,12 +30,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Session persists across browser refresh without re-authentication
   4. RLS policies prevent any user from accessing data outside their authorized scope (verified via test queries)
   5. All screens use the calm visual design system (cream backgrounds, dark gray text, meaningful color only)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
-- [ ] 01-03: TBD
+- [ ] 01-01-PLAN.md — Supabase setup, auth middleware, signup/login flows, role routing, dashboard shells
+- [ ] 01-02-PLAN.md — Database schema with RLS, parent-child linking via invite codes, COPPA consent, audit logging
+- [ ] 01-03-PLAN.md — Design system polish: color tokens, role accent colors, copy audit, decorative element removal
 
 ### Phase 2: Student Learning Experience
 **Goal**: Students with ADHD/Dyslexia can complete lessons because the interface presents one thing at a time, breaks are always available, and accessibility settings adapt to individual needs
@@ -107,7 +107,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Auth | 0/3 | Not started | - |
+| 1. Foundation & Auth | 0/3 | Planned | - |
 | 2. Student Learning Experience | 0/3 | Not started | - |
 | 3. Teacher Dashboard | 0/2 | Not started | - |
 | 4. Parent Dashboard | 0/2 | Not started | - |
@@ -115,4 +115,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 ---
 *Roadmap created: 2026-02-04*
-*Last updated: 2026-02-04*
+*Last updated: 2026-04-02*
