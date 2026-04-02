@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — LevelAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<nav class="topnav topnav--parent">
+  <a href="/parent/dashboard" class="topnav__logo">
+    <div class="topnav__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </a>
+
+  <div class="topnav__nav">
+    <a href="/parent/dashboard" class="active">Overview</a>
+    <a href="/parent/messages"  class="">Messages</a>
+    <a href="/parent/settings"  class="">Settings</a>
+  </div>
+
+  <div class="topnav__controls">
+    <div class="theme-toggle">
+      <span>Light</span>
+      <div class="theme-toggle__track" data-theme-track>
+        <div class="theme-toggle__thumb"></div>
+      </div>
+      <span>Dark</span>
+    </div>
+
+    <span class="topnav__datetime" data-clock></span>
+
+    <div class="topnav__user">
+      <div class="topnav__user-info">
+        <div class="topnav__user-name">David Chen</div>
+        <div class="topnav__user-role">Parent</div>
+      </div>
+      <div class="topnav__avatar-placeholder">👨</div>
+    </div>
+  </div>
+</nav>
+
+<main class="page-wrapper page-wrapper--full fade-in">
+
+  <!-- Page Header -->
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;">
+    <div>
+      <h1 class="page-title">Alex's Progress</h1>
+      <p class="page-subtitle" style="margin-bottom:0;">Here's how Alex is doing this week.</p>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:6px;">
+      <div class="view-toggle">
+        <button class="active">This Week</button>
+        <button>This Month</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Grid -->
+  <div class="dashboard-grid">
+
+    <!-- Left Column -->
+    <div>
+
+      <!-- Summary Cards -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;">
+        <div class="widget-card" style="text-align:center;padding:20px;">
+          <div style="font-size:2rem;font-weight:800;color:var(--color-green);">82%</div>
+          <div style="font-size:0.8125rem;color:var(--color-text-secondary);">Completion Rate</div>
+        </div>
+        <div class="widget-card" style="text-align:center;padding:20px;">
+          <div style="font-size:2rem;font-weight:800;color:var(--color-blue);">3.2</div>
+          <div style="font-size:0.8125rem;color:var(--color-text-secondary);">Avg Hours / Day</div>
+        </div>
+        <div class="widget-card" style="text-align:center;padding:20px;">
+          <div style="font-size:2rem;font-weight:800;color:var(--color-purple);">1.4</div>
+          <div style="font-size:0.8125rem;color:var(--color-text-secondary);">Breaks / Day</div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center;">
+          <h2 style="font-size:1.0625rem;font-weight:700;margin:0;">Recent Activity</h2>
+          <span style="font-size:0.8125rem;color:var(--color-text-muted);">Last 7 days</span>
+        </div>
+
+        <div style="padding:0;">
+          <!-- Day entries -->
+          <div style="padding:14px 20px;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:600;font-size:0.875rem;">Today</div>
+              <div style="font-size:0.8125rem;color:var(--color-text-secondary);">Algebra: Linear Equations, Reading: Chapter 4</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="progress-bar-wrap" style="width:60px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:75%;"></div></div>
+                <span style="font-size:0.8125rem;font-weight:600;">75%</span>
+              </div>
+              <div style="font-size:0.75rem;color:var(--color-text-muted);margin-top:2px;">1 break taken</div>
+            </div>
+          </div>
+
+          <div style="padding:14px 20px;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:600;font-size:0.875rem;">Yesterday</div>
+              <div style="font-size:0.8125rem;color:var(--color-text-secondary);">Writing: Essay Draft, Science: Ecosystems</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="progress-bar-wrap" style="width:60px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:100%;"></div></div>
+                <span style="font-size:0.8125rem;font-weight:600;">100%</span>
+              </div>
+              <div style="font-size:0.75rem;color:var(--color-text-muted);margin-top:2px;">2 breaks taken</div>
+            </div>
+          </div>
+
+          <div style="padding:14px 20px;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:600;font-size:0.875rem;">Monday</div>
+              <div style="font-size:0.8125rem;color:var(--color-text-secondary);">Math: Fractions, Reading: Vocabulary</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="progress-bar-wrap" style="width:60px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:90%;"></div></div>
+                <span style="font-size:0.8125rem;font-weight:600;">90%</span>
+              </div>
+              <div style="font-size:0.75rem;color:var(--color-text-muted);margin-top:2px;">1 break taken</div>
+            </div>
+          </div>
+
+          <div style="padding:14px 20px;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:600;font-size:0.875rem;">Sunday</div>
+              <div style="font-size:0.8125rem;color:var(--color-text-muted);font-style:italic;">No lessons scheduled</div>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-size:0.8125rem;color:var(--color-text-muted);">&mdash;</span>
+            </div>
+          </div>
+
+          <div style="padding:14px 20px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:600;font-size:0.875rem;">Saturday</div>
+              <div style="font-size:0.8125rem;color:var(--color-text-secondary);">Science: Lab Report</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="progress-bar-wrap" style="width:60px;display:inline-block;vertical-align:middle;"><div class="progress-bar" style="width:100%;"></div></div>
+                <span style="font-size:0.8125rem;font-weight:600;">100%</span>
+              </div>
+              <div style="font-size:0.75rem;color:var(--color-text-muted);margin-top:2px;">0 breaks taken</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Break Patterns -->
+      <div class="card" style="margin-top:24px;padding:20px;">
+        <h2 style="font-size:1.0625rem;font-weight:700;margin:0 0 16px 0;">Break Patterns</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+          <div style="text-align:center;padding:16px;border-radius:var(--radius-md);background:var(--color-bg);">
+            <div style="font-size:1.5rem;margin-bottom:4px;">🧘</div>
+            <div style="font-size:1.25rem;font-weight:700;">8</div>
+            <div style="font-size:0.75rem;color:var(--color-text-secondary);">Breathing</div>
+          </div>
+          <div style="text-align:center;padding:16px;border-radius:var(--radius-md);background:var(--color-bg);">
+            <div style="font-size:1.5rem;margin-bottom:4px;">🏃</div>
+            <div style="font-size:1.25rem;font-weight:700;">3</div>
+            <div style="font-size:0.75rem;color:var(--color-text-secondary);">Movement</div>
+          </div>
+          <div style="text-align:center;padding:16px;border-radius:var(--radius-md);background:var(--color-bg);">
+            <div style="font-size:1.5rem;margin-bottom:4px;">🎵</div>
+            <div style="font-size:1.25rem;font-weight:700;">2</div>
+            <div style="font-size:0.75rem;color:var(--color-text-secondary);">Music</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;font-size:0.8125rem;color:var(--color-text-secondary);padding:10px;background:var(--color-green-light);border-radius:var(--radius-sm);">
+          Alex's break frequency is healthy and consistent. Breathing exercises are the most used strategy.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Widgets -->
+    <div>
+
+      <!-- Subject Progress -->
+      <div class="widget-card">
+        <div class="widget-title">Subject Progress</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:4px;">
+              <span>Math</span>
+              <span style="font-weight:600;">85%</span>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar" style="width:85%;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:4px;">
+              <span>Reading</span>
+              <span style="font-weight:600;">92%</span>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar" style="width:92%;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:4px;">
+              <span>Science</span>
+              <span style="font-weight:600;">68%</span>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar" style="width:68%;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:4px;">
+              <span>Writing</span>
+              <span style="font-weight:600;">77%</span>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar" style="width:77%;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages from Teacher -->
+      <div class="widget-card">
+        <div class="widget-title">Messages</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="padding:12px;border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <span style="font-weight:600;font-size:0.875rem;">Ms. Rivera</span>
+              <span style="font-size:0.75rem;color:var(--color-text-muted);">Today 2:30 PM</span>
+            </div>
+            <div style="font-size:0.8125rem;color:var(--color-text-secondary);">
+              Alex did great on today's algebra lesson! He's been really focused this week.
+            </div>
+          </div>
+          <div style="padding:12px;border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <span style="font-weight:600;font-size:0.875rem;">Ms. Rivera</span>
+              <span style="font-size:0.75rem;color:var(--color-text-muted);">Mon 10:15 AM</span>
+            </div>
+            <div style="font-size:0.8125rem;color:var(--color-text-secondary);">
+              Heads up: we're starting a new science unit next week. The reading assignments will be a bit longer.
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-outline w-full" style="margin-top:12px;justify-content:center;">Reply to Teacher</button>
+      </div>
+
+      <!-- Alert Preferences -->
+      <div class="widget-card">
+        <div class="widget-title">Notifications</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.875rem;">Daily progress summary</span>
+            <span style="font-size:0.75rem;color:var(--color-green);font-weight:600;">On</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.875rem;">Break alerts</span>
+            <span style="font-size:0.75rem;color:var(--color-green);font-weight:600;">On</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.875rem;">Teacher messages</span>
+            <span style="font-size:0.75rem;color:var(--color-green);font-weight:600;">On</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.875rem;">Weekly report email</span>
+            <span style="font-size:0.75rem;color:var(--color-text-muted);">Off</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__logo">
+    <div class="footer__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </div>
+  <div class="footer__links">
+    <a href="/teacher/dashboard">Teacher</a>
+    <a href="/parent/dashboard">Parent</a>
+    <a href="#">Help Center</a>
+    <a href="#">Accessibility</a>
+    <a href="/settings">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+  </div>
+  <span>&copy; 2026 LevelAI. All rights reserved.</span>
+</footer>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>
