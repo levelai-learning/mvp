@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reading: The Tell-Tale Heart — LevelAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <style>
+    /* ---- Reading Page Layout ---- */
+    .reading-shell {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    /* ---- Top Bar ---- */
+    .reading-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .reading-topbar__back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color var(--transition);
+    }
+    .reading-topbar__back:hover { color: var(--color-green); }
+
+    .reading-topbar__back svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Progress Dots */
+    .progress-dots {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .progress-dots__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--color-border);
+      transition: background var(--transition), transform var(--transition);
+    }
+    .progress-dots__dot.active {
+      background: var(--color-green);
+      transform: scale(1.15);
+    }
+    .progress-dots__dot.complete {
+      background: var(--color-green);
+    }
+    .progress-dots__label {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      margin-left: 4px;
+    }
+
+    .btn-break-sm {
+      padding: 7px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border-md);
+      background: var(--color-surface);
+      transition: all var(--transition);
+    }
+    .btn-break-sm:hover {
+      border-color: var(--color-orange);
+      color: var(--color-orange);
+    }
+
+    /* ---- Reading Toolbar (Sticky) ---- */
+    .reading-toolbar {
+      position: sticky;
+      top: 56px;
+      z-index: 50;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 10px 16px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toolbar-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+    .toolbar-btn:hover {
+      border-color: var(--color-green);
+      color: var(--color-green);
+    }
+    .toolbar-btn.active {
+      background: var(--color-green);
+      border-color: var(--color-green);
+      color: #fff;
+    }
+
+    .toolbar-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--color-border);
+      flex-shrink: 0;
+    }
+
+    .toolbar-label {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      margin-right: -4px;
+    }
+
+    .font-size-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      transition: all var(--transition);
+    }
+    .font-size-btn:hover {
+      border-color: var(--color-green);
+      color: var(--color-green);
+    }
+
+    /* ---- Section Header ---- */
+    .section-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .section-header__num {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-green);
+      margin-bottom: 4px;
+    }
+    .section-header__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+
+    /* ---- Reading Card ---- */
+    .reading-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-md);
+      min-height: 280px;
+      transition: background var(--transition), border var(--transition);
+    }
+
+    .reading-text {
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--color-text-primary);
+      letter-spacing: 0.01em;
+    }
+
+    .reading-text .word {
+      display: inline;
+      padding: 1px 2px;
+      border-radius: 3px;
+      transition: background 120ms ease, color 120ms ease;
+    }
+    .reading-text .word.highlighted {
+      background: var(--color-green-light);
+      color: var(--color-green);
+    }
+
+    /* ---- Page Navigation ---- */
+    .page-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24px;
+    }
+
+    .page-nav__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+      font-weight: 600;
+      background: var(--color-surface);
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border-md);
+      transition: all var(--transition);
+    }
+    .page-nav__btn:hover:not(:disabled) {
+      border-color: var(--color-green);
+      color: var(--color-green);
+    }
+    .page-nav__btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .page-nav__btn--primary {
+      background: var(--color-green);
+      color: #fff;
+      border-color: var(--color-green);
+    }
+    .page-nav__btn--primary:hover:not(:disabled) {
+      background: var(--color-green-hover);
+      color: #fff;
+    }
+
+    .page-nav__counter {
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+
+    /* ---- Comprehension Question ---- */
+    .quiz-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-md);
+      display: none;
+    }
+    .quiz-card.visible { display: block; }
+
+    .quiz-card__question {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      background: var(--color-surface);
+      transition: all var(--transition);
+      cursor: pointer;
+      text-align: left;
+    }
+    .quiz-option:hover:not(.selected) {
+      border-color: var(--color-green-mid);
+      background: var(--color-green-light);
+    }
+    .quiz-option .option-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: all var(--transition);
+    }
+    .quiz-option.correct {
+      border-color: var(--color-green);
+      background: var(--color-green-light);
+    }
+    .quiz-option.correct .option-letter {
+      background: var(--color-green);
+      color: #fff;
+    }
+    .quiz-option.wrong {
+      border-color: var(--color-orange);
+      background: var(--color-orange-light);
+    }
+    .quiz-option.wrong .option-letter {
+      background: var(--color-orange);
+      color: #fff;
+    }
+
+    .quiz-feedback {
+      margin-top: 16px;
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      display: none;
+    }
+    .quiz-feedback.visible { display: block; }
+    .quiz-feedback.correct {
+      background: var(--color-green-light);
+      color: var(--color-green);
+      border: 1px solid var(--color-green);
+    }
+    .quiz-feedback.wrong {
+      background: var(--color-orange-light);
+      color: var(--color-orange);
+      border: 1px solid var(--color-orange);
+    }
+
+    .quiz-next-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 12px 28px;
+      border-radius: var(--radius-full);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      background: var(--color-green);
+      color: #fff;
+      border: none;
+      transition: background var(--transition);
+    }
+    .quiz-next-btn:hover { background: var(--color-green-hover); }
+    .quiz-next-btn.visible { display: inline-block; }
+
+    /* ---- Completion Screen ---- */
+    .completion-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .completion-screen.visible { display: block; }
+
+    .completion-check {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--color-green);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .completion-screen h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+    }
+    .completion-screen p {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 28px;
+    }
+    .completion-screen .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: var(--radius-full);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      background: var(--color-green);
+      color: #fff;
+      transition: background var(--transition);
+    }
+    .completion-screen .btn-home:hover { background: var(--color-green-hover); }
+
+    /* Utility */
+    .fade-in { animation: fadeIn 300ms ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .reading-card { padding: 24px 18px; }
+      .reading-toolbar { padding: 8px 10px; gap: 6px; }
+      .toolbar-btn { padding: 5px 8px; font-size: 0.75rem; }
+      .reading-topbar { flex-wrap: wrap; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/home.html" class="topnav__logo">
+    <div class="topnav__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </a>
+
+  <div class="topnav__nav">
+    <a href="/home.html">Home</a>
+    <a href="/task.html" class="active">Tasks</a>
+    <a href="/schedule.html">Schedule</a>
+    <a href="/settings.html">Settings</a>
+  </div>
+
+  <div class="topnav__controls">
+    <button class="topnav__font-btn" data-font-btn>Change Font to Open Dyslexic</button>
+
+    <div class="theme-toggle">
+      <span>Light</span>
+      <div class="theme-toggle__track" data-theme-track>
+        <div class="theme-toggle__thumb"></div>
+      </div>
+      <span>Dark</span>
+    </div>
+
+    <span class="topnav__datetime" data-clock></span>
+
+    <a href="/break.html" class="btn-break">Need a break</a>
+
+    <div class="topnav__user">
+      <div class="topnav__user-info">
+        <div class="topnav__user-name" data-name>Alex</div>
+        <div class="topnav__user-role">Student</div>
+      </div>
+      <div class="topnav__avatar-placeholder" data-user-avatar>👤</div>
+    </div>
+  </div>
+</nav>
+
+<main class="reading-shell fade-in">
+
+  <!-- Top Bar: Back, Progress, Break -->
+  <div class="reading-topbar">
+    <a href="/home.html" class="reading-topbar__back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Home
+    </a>
+
+    <div class="progress-dots">
+      <div class="progress-dots__dot active" data-dot="0"></div>
+      <div class="progress-dots__dot" data-dot="1"></div>
+      <div class="progress-dots__dot" data-dot="2"></div>
+      <div class="progress-dots__dot" data-dot="3"></div>
+      <span class="progress-dots__label" id="progressLabel">Section 1 of 4</span>
+    </div>
+
+  </div>
+
+  <!-- Reading Toolbar -->
+  <div class="reading-toolbar">
+    <button class="toolbar-btn" id="btnHighlight">
+      <span>Highlight</span>
+    </button>
+    <button class="toolbar-btn" id="btnReadAloud">
+      <span>Read Aloud</span>
+    </button>
+    <button class="toolbar-btn" id="btnPause" style="display:none;">
+      <span>⏸ Pause</span>
+    </button>
+
+    <div class="toolbar-sep"></div>
+
+    <span class="toolbar-label">Speed</span>
+    <button class="toolbar-btn" id="btnSpeed">1x</button>
+
+    <div class="toolbar-sep"></div>
+
+    <span class="toolbar-label">Font</span>
+    <button class="font-size-btn" id="btnFontDec" aria-label="Decrease font size">A-</button>
+    <button class="font-size-btn" id="btnFontInc" aria-label="Increase font size">A+</button>
+  </div>
+
+  <!-- Section Navigation -->
+  <div style="display:flex;justify-content:center;gap:6px;margin-bottom:16px;flex-wrap:wrap;" id="sectionNav">
+    <button class="toolbar-btn active" data-section-nav="0" style="font-size:0.75rem;padding:5px 12px;">1: The Narrator Speaks</button>
+    <button class="toolbar-btn" data-section-nav="1" style="font-size:0.75rem;padding:5px 12px;">2: The Careful Plan</button>
+    <button class="toolbar-btn" data-section-nav="2" style="font-size:0.75rem;padding:5px 12px;">3: The Dreadful Night</button>
+    <button class="toolbar-btn" data-section-nav="3" style="font-size:0.75rem;padding:5px 12px;">4: The Beating Heart</button>
+  </div>
+
+  <!-- Section Header -->
+  <div class="section-header" id="sectionHeader">
+    <div class="section-header__num">Section 1</div>
+    <div class="section-header__title">The Narrator Speaks</div>
+    <div style="font-size:0.75rem;color:var(--color-text-muted);margin-top:4px;">from "The Tell-Tale Heart" by Edgar Allan Poe (1843)</div>
+  </div>
+
+  <!-- Reading Card -->
+  <div class="reading-card" id="readingCard">
+    <div class="reading-text" id="readingText"></div>
+  </div>
+
+  <!-- Page Navigation -->
+  <div class="page-nav" id="pageNav">
+    <button class="page-nav__btn" id="btnPrev" disabled>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Previous
+    </button>
+    <span class="page-nav__counter" id="pageCounter">Page 1 of 2</span>
+    <button class="page-nav__btn page-nav__btn--primary" id="btnNext">
+      Next
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+
+  <!-- Quiz Card -->
+  <div class="quiz-card" id="quizCard">
+    <div class="quiz-card__question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback"></div>
+    <button class="quiz-next-btn" id="quizNextBtn">Continue to Next Section</button>
+  </div>
+
+  <!-- Completion Screen -->
+  <div class="completion-screen" id="completionScreen">
+    <div class="completion-check">&#10003;</div>
+    <h2>Mission Complete!</h2>
+    <p>You finished reading "The Tell-Tale Heart" by Edgar Allan Poe. Great work!</p>
+    <a href="/home.html" class="btn-home">Back to Dashboard</a>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__logo">
+    <div class="footer__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </div>
+  <div class="footer__links">
+    <a href="/teacher/dashboard.html">Teacher</a>
+    <a href="/parent/dashboard.html">Parent</a>
+    <a href="#">Help Center</a>
+    <a href="#">Accessibility</a>
+    <a href="/settings.html">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+  </div>
+  <span>&copy; 2026 LevelAI. All rights reserved.</span>
+</footer>
+<script src="/assets/js/app.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ===========================================================
+     Story Data
+     =========================================================== */
+  var storyData = [
+    {
+      section: 1,
+      title: 'The Narrator Speaks',
+      pages: [
+        'TRUE! -- nervous -- very, very dreadfully nervous I had been and am; but why will you say that I am mad? The disease had sharpened my senses -- not destroyed -- not dulled them. Above all was the sense of hearing acute. I heard all things in the heaven and in the earth. I heard many things in hell. How, then, am I mad? Hearken! and observe how healthily -- how calmly I can tell you the whole story.',
+        'It is impossible to say how first the idea entered my brain; but once conceived, it haunted me day and night. Object there was none. Passion there was none. I loved the old man. He had never wronged me. He had never given me insult. For his gold I had no desire. I think it was his eye! yes, it was this! He had the eye of a vulture -- a pale blue eye, with a film over it. Whenever it fell upon me, my blood ran cold; and so by degrees -- very gradually -- I made up my mind to take the life of the old man, and thus rid myself of the eye forever.'
+      ],
+      question: {
+        text: 'What bothers the narrator about the old man?',
+        options: [
+          { letter: 'A', text: "The old man's wealth", correct: false },
+          { letter: 'B', text: "The old man's pale blue eye", correct: true },
+          { letter: 'C', text: "The old man's loud voice", correct: false },
+          { letter: 'D', text: "The old man's house", correct: false }
+        ],
+        correctFeedback: "Exactly! The narrator is fixated on the old man's pale blue eye, which he compares to a vulture's eye.",
+        wrongFeedback: "Not quite -- read the passage again. The narrator says 'I think it was his eye!' The pale blue eye is what disturbs him."
+      }
+    },
+    {
+      section: 2,
+      title: 'The Careful Plan',
+      pages: [
+        'And every night, about midnight, I turned the latch of his door and opened it -- oh so gently! And then, when I had made an opening sufficient for my head, I put in a dark lantern, all closed, closed, that no light shone out, and then I thrust in my head. Oh, you would have laughed to see how cunningly I thrust it in! I moved it slowly -- very, very slowly, so that I might not disturb the old man\'s sleep. It took me an hour to place my whole head within the opening so far that I could see him as he lay upon his bed. Ha! would a madman have been so wise as this?',
+        'And then, when my head was well in the room, I undid the lantern cautiously -- oh, so cautiously -- cautiously (for the hinges creaked) -- I undid it just so much that a single thin ray fell upon the vulture eye. And this I did for seven long nights -- every night just at midnight -- but I found the eye always closed; and so it was impossible to do the work; for it was not the old man who vexed me, but his Evil Eye.'
+      ],
+      question: {
+        text: 'How does the narrator prepare each night?',
+        options: [
+          { letter: 'A', text: 'He rushes in quickly', correct: false },
+          { letter: 'B', text: 'He opens the door slowly and shines a thin ray of light on the eye', correct: true },
+          { letter: 'C', text: 'He waits outside the window', correct: false }
+        ],
+        correctFeedback: "That's right! The narrator takes a full hour to open the door and carefully directs a single ray of light at the old man's eye.",
+        wrongFeedback: 'Look again -- the narrator describes being very slow and cautious.'
+      }
+    },
+    {
+      section: 3,
+      title: 'The Dreadful Night',
+      pages: [
+        'Upon the eighth night I was more than usually cautious in opening the door. A watch\'s minute hand moves more quickly than did mine. Never before that night had I felt the extent of my own powers -- of my sagacity. I could scarcely contain my feelings of triumph. To think that there I was, opening the door, little by little, and he not even to dream of my secret deeds or thoughts.',
+        'I had my head in, and was about to open the lantern, when my thumb slipped upon the tin fastening, and the old man sprang up in bed, crying out -- \'Who\'s there?\' I kept quite still and said nothing. For a whole hour I did not move a muscle, and in the meantime I did not hear him lie down. He was still sitting up in the bed listening; -- just as I have done, night after night, hearkening to the death watches in the wall.',
+        'Presently I heard a slight groan, and I knew it was the groan of mortal terror. It was not a groan of pain or of grief -- oh, no! -- it was the low stifled sound that arises from the bottom of the soul when overcharged with awe. I knew the sound well. Many a night, just at midnight, when all the world slept, it has welled up from my own bosom, deepening, with its dreadful echo, the terrors that distracted me.'
+      ],
+      question: {
+        text: 'What happens differently on the eighth night?',
+        options: [
+          { letter: 'A', text: 'The narrator decides not to go through with the plan', correct: false },
+          { letter: 'B', text: "The old man wakes up and calls out", correct: true },
+          { letter: 'C', text: 'The narrator falls asleep', correct: false },
+          { letter: 'D', text: 'A neighbor comes to visit', correct: false }
+        ],
+        correctFeedback: "Right! The narrator's thumb slips on the lantern, making noise, and the old man springs up crying 'Who's there?'",
+        wrongFeedback: 'Re-read carefully -- a small accident causes a noise that wakes the old man.'
+      }
+    },
+    {
+      section: 4,
+      title: 'The Beating Heart',
+      pages: [
+        'If still you think me mad, you will think so no longer when I describe the wise precautions I took for the concealment of the body. The night waned, and I worked hastily, but in silence. First of all I dismembered the corpse. I cut off the head and the arms and the legs. I then took up three planks from the flooring of the chamber, and deposited all between the scantlings. I then replaced the boards so cleverly, so cunningly, that no human eye -- not even his -- could have detected anything wrong.',
+        'When I had made an end of these labors, it was four o\'clock -- still dark as midnight. As the bell sounded the hour, there came a knocking at the street door. I went down to open it with a light heart, -- for what had I now to fear? There entered three men, who introduced themselves, with perfect suavity, as officers of the police. A shriek had been heard by a neighbour during the night; suspicion of foul play had been aroused; information had been lodged at the police office, and they (the officers) had been deputed to search the premises.',
+        "'Villains!' I shrieked, 'dissemble no more! I admit the deed! -- tear up the planks! here, here! -- It is the beating of his hideous heart!'"
+      ],
+      question: {
+        text: 'Why does the narrator confess to the police?',
+        options: [
+          { letter: 'A', text: 'The police find evidence under the floor', correct: false },
+          { letter: 'B', text: "He hears a beating heart sound and can't stand it anymore", correct: true },
+          { letter: 'C', text: 'A witness identifies him', correct: false }
+        ],
+        correctFeedback: "Exactly! The narrator becomes convinced he hears the old man's heart still beating beneath the floor, and his guilt drives him to confess.",
+        wrongFeedback: "Think about the title -- 'The Tell-Tale Heart.' The narrator confesses because he believes he hears something that won't let him stay quiet."
+      }
+    }
+  ];
+
+  /* ===========================================================
+     State
+     =========================================================== */
+  var state = {
+    sectionIdx: 0,
+    pageIdx: 0,
+    fontSize: 18,
+    speed: 1,            // multiplier
+    speedOptions: [0.75, 1, 1.25, 1.5],
+    speedIdx: 1,
+    highlightOn: false,
+    readAloudOn: false,
+    highlightTimer: null,
+    quizAnswered: false,
+    showingQuiz: false,
+    showingCompletion: false
+  };
+
+  /* ===========================================================
+     DOM References
+     =========================================================== */
+  var $readingText = document.getElementById('readingText');
+  var $readingCard = document.getElementById('readingCard');
+  var $pageNav = document.getElementById('pageNav');
+  var $pageCounter = document.getElementById('pageCounter');
+  var $btnPrev = document.getElementById('btnPrev');
+  var $btnNext = document.getElementById('btnNext');
+  var $sectionHeader = document.getElementById('sectionHeader');
+  var $progressLabel = document.getElementById('progressLabel');
+  var $quizCard = document.getElementById('quizCard');
+  var $quizQuestion = document.getElementById('quizQuestion');
+  var $quizOptions = document.getElementById('quizOptions');
+  var $quizFeedback = document.getElementById('quizFeedback');
+  var $quizNextBtn = document.getElementById('quizNextBtn');
+  var $completionScreen = document.getElementById('completionScreen');
+
+  var $btnHighlight = document.getElementById('btnHighlight');
+  var $btnReadAloud = document.getElementById('btnReadAloud');
+  var $btnPause = document.getElementById('btnPause');
+  var $btnSpeed = document.getElementById('btnSpeed');
+  var $btnFontDec = document.getElementById('btnFontDec');
+  var $btnFontInc = document.getElementById('btnFontInc');
+  var $sectionNav = document.getElementById('sectionNav');
+
+  /* ===========================================================
+     Rendering
+     =========================================================== */
+  function currentSection() { return storyData[state.sectionIdx]; }
+  function totalPages() { return currentSection().pages.length; }
+
+  function render() {
+    // Stop any active features
+    stopHighlight();
+    stopReadAloud();
+
+    if (state.showingCompletion) {
+      $readingCard.style.display = 'none';
+      $pageNav.style.display = 'none';
+      $quizCard.classList.remove('visible');
+      $sectionHeader.style.display = 'none';
+      $completionScreen.classList.add('visible');
+      updateDots();
+      return;
+    }
+
+    $completionScreen.classList.remove('visible');
+    $sectionHeader.style.display = '';
+
+    if (state.showingQuiz) {
+      $readingCard.style.display = 'none';
+      $pageNav.style.display = 'none';
+      $quizCard.classList.add('visible');
+      renderQuiz();
+      updateDots();
+      return;
+    }
+
+    $quizCard.classList.remove('visible');
+    $readingCard.style.display = '';
+    $pageNav.style.display = '';
+
+    // Section header
+    var sec = currentSection();
+    $sectionHeader.innerHTML =
+      '<div class="section-header__num">Section ' + sec.section + '</div>' +
+      '<div class="section-header__title">' + sec.title + '</div>' +
+      '<div style="font-size:0.75rem;color:var(--color-text-muted);margin-top:4px;">from "The Tell-Tale Heart" by Edgar Allan Poe (1843)</div>';
+
+    // Update section nav buttons
+    var navBtns = $sectionNav.querySelectorAll('[data-section-nav]');
+    navBtns.forEach(function(btn, i) {
+      btn.classList.toggle('active', i === state.sectionIdx);
+    });
+
+    // Text with word spans
+    var text = sec.pages[state.pageIdx];
+    var words = text.split(/(\s+)/);
+    var html = '';
+    words.forEach(function (w) {
+      if (/^\s+$/.test(w)) {
+        html += w;
+      } else {
+        html += '<span class="word">' + escapeHtml(w) + '</span>';
+      }
+    });
+    $readingText.innerHTML = html;
+    $readingText.style.fontSize = state.fontSize + 'px';
+
+    // Page counter
+    $pageCounter.textContent = 'Page ' + (state.pageIdx + 1) + ' of ' + totalPages();
+
+    // Buttons
+    $btnPrev.disabled = (state.pageIdx === 0 && state.sectionIdx === 0);
+    var isLastPage = (state.pageIdx === totalPages() - 1);
+    $btnNext.textContent = isLastPage ? 'Answer Question' : 'Next';
+
+    updateDots();
+  }
+
+  function updateDots() {
+    var dots = document.querySelectorAll('.progress-dots__dot');
+    dots.forEach(function (dot, i) {
+      dot.classList.remove('active', 'complete');
+      if (i < state.sectionIdx) dot.classList.add('complete');
+      if (i === state.sectionIdx && !state.showingCompletion) dot.classList.add('active');
+      if (state.showingCompletion) dot.classList.add('complete');
+    });
+    if (state.showingCompletion) {
+      $progressLabel.textContent = 'Complete!';
+    } else {
+      $progressLabel.textContent = 'Section ' + (state.sectionIdx + 1) + ' of 4';
+    }
+  }
+
+  function renderQuiz() {
+    var q = currentSection().question;
+    $quizQuestion.textContent = q.text;
+    $quizOptions.innerHTML = '';
+    $quizFeedback.className = 'quiz-feedback';
+    $quizFeedback.textContent = '';
+    $quizNextBtn.classList.remove('visible');
+    state.quizAnswered = false;
+
+    q.options.forEach(function (opt, i) {
+      var btn = document.createElement('button');
+      btn.className = 'quiz-option';
+      btn.innerHTML =
+        '<span class="option-letter">' + opt.letter + '</span>' +
+        '<span>' + escapeHtml(opt.text) + '</span>';
+      btn.addEventListener('click', function () { handleAnswer(i); });
+      $quizOptions.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(idx) {
+    if (state.quizAnswered) return;
+    var q = currentSection().question;
+    var opt = q.options[idx];
+    var btns = $quizOptions.querySelectorAll('.quiz-option');
+
+    btns[idx].classList.add('selected');
+
+    if (opt.correct) {
+      state.quizAnswered = true;
+      btns[idx].classList.add('correct');
+      $quizFeedback.textContent = q.correctFeedback;
+      $quizFeedback.className = 'quiz-feedback visible correct';
+
+      // Determine button text
+      if (state.sectionIdx === storyData.length - 1) {
+        $quizNextBtn.textContent = 'Finish Reading';
+      } else {
+        $quizNextBtn.textContent = 'Continue to Next Section';
+      }
+      $quizNextBtn.classList.add('visible');
+
+      // Disable other options
+      btns.forEach(function (b) { b.style.pointerEvents = 'none'; });
+    } else {
+      btns[idx].classList.add('wrong');
+      $quizFeedback.textContent = q.wrongFeedback;
+      $quizFeedback.className = 'quiz-feedback visible wrong';
+
+      // Let them retry -- remove wrong state after a moment
+      setTimeout(function () {
+        btns[idx].classList.remove('wrong', 'selected');
+        $quizFeedback.className = 'quiz-feedback';
+      }, 2000);
+    }
+  }
+
+  /* ===========================================================
+     Navigation
+     =========================================================== */
+  $btnNext.addEventListener('click', function () {
+    if (state.pageIdx < totalPages() - 1) {
+      state.pageIdx++;
+      render();
+    } else {
+      // Show quiz
+      state.showingQuiz = true;
+      render();
+    }
+  });
+
+  $btnPrev.addEventListener('click', function () {
+    if (state.showingQuiz) {
+      state.showingQuiz = false;
+      state.pageIdx = totalPages() - 1;
+      render();
+      return;
+    }
+    if (state.pageIdx > 0) {
+      state.pageIdx--;
+      render();
+    } else if (state.sectionIdx > 0) {
+      state.sectionIdx--;
+      state.pageIdx = currentSection().pages.length - 1;
+      render();
+    }
+  });
+
+  $quizNextBtn.addEventListener('click', function () {
+    if (state.sectionIdx < storyData.length - 1) {
+      state.sectionIdx++;
+      state.pageIdx = 0;
+      state.showingQuiz = false;
+      render();
+    } else {
+      // Done!
+      state.showingCompletion = true;
+      state.showingQuiz = false;
+      render();
+    }
+  });
+
+  /* ===========================================================
+     Pause Button — pauses both highlight and read aloud
+     =========================================================== */
+  state.paused = false;
+  state.highlightIdx = 0;
+
+  function showPauseBtn() {
+    $btnPause.style.display = '';
+    $btnPause.querySelector('span').textContent = '⏸ Pause';
+    state.paused = false;
+  }
+  function hidePauseBtn() {
+    $btnPause.style.display = 'none';
+    state.paused = false;
+  }
+
+  $btnPause.addEventListener('click', function () {
+    if (state.paused) {
+      // Resume
+      state.paused = false;
+      $btnPause.querySelector('span').textContent = '⏸ Pause';
+      if (state.highlightOn) resumeHighlight();
+      if (state.readAloudOn && 'speechSynthesis' in window) window.speechSynthesis.resume();
+    } else {
+      // Pause
+      state.paused = true;
+      $btnPause.querySelector('span').textContent = '▶ Resume';
+      if (state.highlightTimer) { clearTimeout(state.highlightTimer); state.highlightTimer = null; }
+      if (state.readAloudOn && 'speechSynthesis' in window) window.speechSynthesis.pause();
+    }
+  });
+
+  /* ===========================================================
+     Highlight Feature — fixed linear word-by-word
+     =========================================================== */
+  $btnHighlight.addEventListener('click', function () {
+    if (state.highlightOn) {
+      state.highlightOn = false;
+      $btnHighlight.classList.remove('active');
+      stopHighlight();
+      hidePauseBtn();
+    } else {
+      state.highlightOn = true;
+      $btnHighlight.classList.add('active');
+      state.highlightIdx = 0;
+      startHighlight();
+      showPauseBtn();
+    }
+  });
+
+  function startHighlight() {
+    stopHighlightTimer();
+    var words = $readingText.querySelectorAll('.word');
+    if (!words.length) return;
+    var baseDelay = 320;
+
+    function step() {
+      if (state.paused) return; // paused — don't advance
+      // Clear ALL highlights first
+      for (var i = 0; i < words.length; i++) words[i].classList.remove('highlighted');
+
+      if (state.highlightIdx >= words.length) {
+        // Finished page
+        state.highlightOn = false;
+        $btnHighlight.classList.remove('active');
+        hidePauseBtn();
+        return;
+      }
+      words[state.highlightIdx].classList.add('highlighted');
+      state.highlightIdx++;
+      state.highlightTimer = setTimeout(step, baseDelay / state.speed);
+    }
+    step();
+  }
+
+  function resumeHighlight() {
+    // Continue from where we left off
+    startHighlight();
+  }
+
+  function stopHighlightTimer() {
+    if (state.highlightTimer) {
+      clearTimeout(state.highlightTimer);
+      state.highlightTimer = null;
+    }
+  }
+
+  function stopHighlight() {
+    stopHighlightTimer();
+    state.highlightIdx = 0;
+    var words = $readingText.querySelectorAll('.word');
+    for (var i = 0; i < words.length; i++) words[i].classList.remove('highlighted');
+  }
+
+  /* ===========================================================
+     Read Aloud (Web Speech API) — improved voice + char-based sync
+     =========================================================== */
+  var preferredVoice = null;
+
+  // Try to find a natural/premium voice
+  function pickVoice() {
+    if (!('speechSynthesis' in window)) return null;
+    var voices = window.speechSynthesis.getVoices();
+    if (!voices.length) return null;
+
+    // Prefer voices with "Natural", "Enhanced", "Premium", "Samantha", "Karen", "Daniel" in name
+    var preferred = ['samantha', 'karen', 'daniel', 'natural', 'enhanced', 'premium', 'fiona', 'moira', 'tessa'];
+    for (var p = 0; p < preferred.length; p++) {
+      for (var v = 0; v < voices.length; v++) {
+        if (voices[v].lang.indexOf('en') === 0 && voices[v].name.toLowerCase().indexOf(preferred[p]) !== -1) {
+          return voices[v];
+        }
+      }
+    }
+    // Fallback: first English voice
+    for (var v = 0; v < voices.length; v++) {
+      if (voices[v].lang.indexOf('en') === 0) return voices[v];
+    }
+    return voices[0];
+  }
+
+  // Voices load async in some browsers
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = function () { preferredVoice = pickVoice(); };
+    preferredVoice = pickVoice();
+  }
+
+  $btnReadAloud.addEventListener('click', function () {
+    if (state.readAloudOn) {
+      state.readAloudOn = false;
+      $btnReadAloud.classList.remove('active');
+      stopReadAloud();
+      hidePauseBtn();
+    } else {
+      state.readAloudOn = true;
+      $btnReadAloud.classList.add('active');
+      startReadAloud();
+      showPauseBtn();
+    }
+  });
+
+  function startReadAloud() {
+    stopReadAloud();
+    if (!('speechSynthesis' in window)) {
+      alert('Sorry, your browser does not support text-to-speech.');
+      state.readAloudOn = false;
+      $btnReadAloud.classList.remove('active');
+      return;
+    }
+
+    var text = currentSection().pages[state.pageIdx];
+    var utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = state.speed;
+    utterance.lang = 'en-US';
+    if (preferredVoice) utterance.voice = preferredVoice;
+
+    // Use character index from boundary event for accurate word sync
+    var words = $readingText.querySelectorAll('.word');
+
+    // Build a map of character offsets for each word span
+    var wordOffsets = [];
+    var plainWords = text.split(/\s+/);
+    var charPos = 0;
+    for (var i = 0; i < plainWords.length; i++) {
+      var idx = text.indexOf(plainWords[i], charPos);
+      if (idx === -1) idx = charPos;
+      wordOffsets.push(idx);
+      charPos = idx + plainWords[i].length;
+    }
+
+    utterance.addEventListener('boundary', function (e) {
+      if (e.name === 'word') {
+        // Find closest word span by character index
+        var ci = e.charIndex;
+        var bestIdx = 0;
+        var bestDist = Math.abs(wordOffsets[0] - ci);
+        for (var w = 1; w < wordOffsets.length; w++) {
+          var dist = Math.abs(wordOffsets[w] - ci);
+          if (dist < bestDist) { bestDist = dist; bestIdx = w; }
+        }
+        // Highlight that word
+        for (var w = 0; w < words.length; w++) words[w].classList.remove('highlighted');
+        if (bestIdx < words.length) {
+          words[bestIdx].classList.add('highlighted');
+        }
+      }
+    });
+
+    utterance.addEventListener('end', function () {
+      for (var w = 0; w < words.length; w++) words[w].classList.remove('highlighted');
+      state.readAloudOn = false;
+      $btnReadAloud.classList.remove('active');
+      hidePauseBtn();
+    });
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function stopReadAloud() {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    var words = $readingText.querySelectorAll('.word');
+    for (var i = 0; i < words.length; i++) words[i].classList.remove('highlighted');
+  }
+
+  /* ===========================================================
+     Section Navigation — clickable section buttons
+     =========================================================== */
+  $sectionNav.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-section-nav]');
+    if (!btn) return;
+    var idx = parseInt(btn.getAttribute('data-section-nav'), 10);
+    if (idx === state.sectionIdx) return;
+    stopHighlight();
+    stopReadAloud();
+    hidePauseBtn();
+    state.sectionIdx = idx;
+    state.pageIdx = 0;
+    state.showingQuiz = false;
+    state.highlightOn = false;
+    state.readAloudOn = false;
+    $btnHighlight.classList.remove('active');
+    $btnReadAloud.classList.remove('active');
+    render();
+  });
+
+  /* ===========================================================
+     Speed Control
+     =========================================================== */
+  $btnSpeed.addEventListener('click', function () {
+    state.speedIdx = (state.speedIdx + 1) % state.speedOptions.length;
+    state.speed = state.speedOptions[state.speedIdx];
+    $btnSpeed.textContent = state.speed + 'x';
+  });
+
+  /* ===========================================================
+     Font Size
+     =========================================================== */
+  $btnFontDec.addEventListener('click', function () {
+    if (state.fontSize > 16) {
+      state.fontSize -= 2;
+      $readingText.style.fontSize = state.fontSize + 'px';
+    }
+  });
+
+  $btnFontInc.addEventListener('click', function () {
+    if (state.fontSize < 28) {
+      state.fontSize += 2;
+      $readingText.style.fontSize = state.fontSize + 'px';
+    }
+  });
+
+  /* ===========================================================
+     Utility
+     =========================================================== */
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+  /* ===========================================================
+     Init
+     =========================================================== */
+  render();
+
+})();
+</script>
+</body>
+</html>

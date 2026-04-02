@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fractions 101 — LevelAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <style>
+    /* --- Math exercise page styles --- */
+
+    .math-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .math-topbar__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color var(--transition);
+    }
+
+    .math-topbar__back:hover {
+      color: var(--color-green);
+    }
+
+    .math-topbar__progress-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+    }
+
+    .math-topbar__break {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-orange);
+      border: 1px solid var(--color-orange);
+      background: var(--color-orange-light);
+      transition: background var(--transition);
+    }
+
+    .math-topbar__break:hover {
+      background: #ffe4d4;
+    }
+
+    /* Progress bar */
+    .math-progress {
+      width: 100%;
+      height: 8px;
+      background: var(--color-border);
+      border-radius: var(--radius-full);
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+
+    .math-progress__fill {
+      height: 100%;
+      background: var(--color-green);
+      border-radius: var(--radius-full);
+      transition: width 0.4s ease;
+    }
+
+    /* Exercise card */
+    .math-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 48px 40px;
+      box-shadow: var(--shadow-md);
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .math-card__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+    }
+
+    .math-card__subtitle {
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 36px;
+    }
+
+    /* Fraction display */
+    .fraction-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .fraction {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .fraction__num,
+    .fraction__den {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--color-text-primary);
+    }
+
+    .fraction__bar {
+      width: 56px;
+      height: 4px;
+      background: var(--color-text-primary);
+      border-radius: 2px;
+    }
+
+    .fraction-op {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-green);
+      line-height: 1;
+    }
+
+    .fraction-eq {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      line-height: 1;
+    }
+
+    /* Answer input area */
+    .answer-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 28px;
+    }
+
+    .answer-fraction {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .answer-fraction input {
+      width: 80px;
+      height: 56px;
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      background: var(--color-bg);
+      border: 2px solid var(--color-border-md);
+      border-radius: var(--radius-md);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      -moz-appearance: textfield;
+    }
+
+    .answer-fraction input::-webkit-outer-spin-button,
+    .answer-fraction input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .answer-fraction input:focus {
+      border-color: var(--color-green);
+      box-shadow: 0 0 0 3px var(--color-green-light);
+    }
+
+    .answer-fraction__bar {
+      width: 80px;
+      height: 4px;
+      background: var(--color-text-primary);
+      border-radius: 2px;
+    }
+
+    /* Buttons */
+    .math-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background var(--transition), transform 80ms ease;
+      border: none;
+    }
+
+    .math-btn:active {
+      transform: scale(0.97);
+    }
+
+    .math-btn--primary {
+      background: var(--color-green);
+      color: #fff;
+    }
+
+    .math-btn--primary:hover {
+      background: var(--color-green-hover);
+    }
+
+    .math-btn--primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .math-btn--secondary {
+      background: var(--color-green-light);
+      color: var(--color-green);
+    }
+
+    .math-btn--secondary:hover {
+      background: #d8e5da;
+    }
+
+    /* Feedback */
+    .feedback {
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .feedback--correct {
+      display: block;
+      background: var(--color-green-light);
+      color: var(--color-green);
+      border: 1px solid #b5d4ba;
+    }
+
+    .feedback--incorrect {
+      display: block;
+      background: var(--color-orange-light);
+      color: var(--color-orange);
+      border: 1px solid #f0c8aa;
+    }
+
+    /* Steps panel */
+    .steps-panel {
+      text-align: left;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .steps-panel summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+      transition: background var(--transition);
+      list-style: none;
+    }
+
+    .steps-panel summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .steps-panel summary:hover {
+      background: var(--color-border);
+    }
+
+    .steps-panel .steps-content {
+      margin-top: 12px;
+      padding: 16px 20px;
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+    }
+
+    .steps-panel .step-line {
+      display: block;
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      padding: 6px 0;
+      line-height: 1.5;
+    }
+
+    .steps-panel .step-line:not(:last-child) {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .steps-panel .step-line strong {
+      color: var(--color-text-primary);
+    }
+
+    /* Button row */
+    .math-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Completion screen */
+    .completion-screen {
+      text-align: center;
+      padding: 60px 40px;
+    }
+
+    .completion-screen__icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+
+    .completion-screen__title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+    }
+
+    .completion-screen__subtitle {
+      font-size: 1.0625rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .completion-screen__score {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-green);
+      background: var(--color-green-light);
+      padding: 12px 28px;
+      border-radius: var(--radius-full);
+      margin-bottom: 28px;
+    }
+
+    /* Hide/show helpers */
+    .hidden { display: none !important; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .math-card { padding: 32px 20px; }
+      .fraction__num, .fraction__den { font-size: 2.5rem; }
+      .fraction__bar { width: 40px; }
+      .fraction-op, .fraction-eq { font-size: 2rem; }
+      .answer-fraction input { width: 64px; height: 48px; font-size: 2rem; }
+      .answer-fraction__bar { width: 64px; }
+      .math-topbar { flex-wrap: wrap; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/home.html" class="topnav__logo">
+    <div class="topnav__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </a>
+
+  <div class="topnav__nav">
+    <a href="/home.html"     class="">Home</a>
+    <a href="/task.html"     class="active">Tasks</a>
+    <a href="/schedule.html" class="">Schedule</a>
+    <a href="/settings.html" class="">Settings</a>
+  </div>
+
+  <div class="topnav__controls">
+    <button class="topnav__font-btn" data-font-btn>Change Font to Open Dyslexic</button>
+
+    <div class="theme-toggle">
+      <span>Light</span>
+      <div class="theme-toggle__track" data-theme-track>
+        <div class="theme-toggle__thumb"></div>
+      </div>
+      <span>Dark</span>
+    </div>
+
+    <span class="topnav__datetime" data-clock></span>
+
+    <a href="/break.html" class="btn-break">
+      Need a break    </a>
+
+    <div class="topnav__user">
+      <div class="topnav__user-info">
+        <div class="topnav__user-name" data-name>Alex</div>
+        <div class="topnav__user-role">Student</div>
+      </div>
+      <div class="topnav__avatar-placeholder" data-user-avatar>👤</div>
+    </div>
+  </div>
+</nav>
+
+<main class="page-wrapper fade-in" style="max-width:680px;">
+
+  <!-- Top bar: back, progress label, break -->
+  <div class="math-topbar">
+    <a href="/home.html" class="math-topbar__back">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Home
+    </a>
+    <span class="math-topbar__progress-label" data-progress-label>Problem 1 of 5</span>
+    <a href="/break.html" class="math-topbar__break">☕ Take a Break</a>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="math-progress">
+    <div class="math-progress__fill" data-progress-bar style="width: 0%;"></div>
+  </div>
+
+  <!-- Exercise card -->
+  <div class="math-card" data-exercise-card>
+    <h1 class="math-card__title">Fractions 101</h1>
+    <p class="math-card__subtitle" data-problem-instruction>Add these fractions together.</p>
+
+    <!-- Fraction problem display -->
+    <div class="fraction-display" data-fraction-display>
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Answer input -->
+    <div class="answer-area">
+      <span class="fraction-eq">=</span>
+      <div style="width: 16px;"></div>
+      <div class="answer-fraction">
+        <input type="number" id="answer-num" data-answer-num placeholder="?" aria-label="Numerator">
+        <div class="answer-fraction__bar"></div>
+        <input type="number" id="answer-den" data-answer-den placeholder="?" aria-label="Denominator">
+      </div>
+    </div>
+
+    <!-- Feedback -->
+    <div class="feedback" data-feedback></div>
+
+    <!-- Steps panel -->
+    <details class="steps-panel" data-steps-panel>
+      <summary>💡 Show Steps</summary>
+      <div class="steps-content" data-steps-content>
+        <!-- Populated by JS -->
+      </div>
+    </details>
+
+    <!-- Action buttons -->
+    <div class="math-actions">
+      <button class="math-btn math-btn--primary" data-check-btn>Check Answer</button>
+      <button class="math-btn math-btn--secondary hidden" data-next-btn>Next Problem →</button>
+    </div>
+  </div>
+
+  <!-- Completion screen (hidden initially) -->
+  <div class="math-card hidden" data-completion-card>
+    <div class="completion-screen">
+      <div class="completion-screen__icon">🎉</div>
+      <div class="completion-screen__title">Great Work!</div>
+      <div class="completion-screen__subtitle">
+        You finished all 5 fraction problems.<br>
+        Keep practicing and those fractions will feel like second nature!
+      </div>
+      <div class="completion-screen__score" data-final-score>
+        ✅ 5 / 5 correct
+      </div>
+      <div style="margin-top: 8px;">
+        <a href="/home.html" class="math-btn math-btn--primary">Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__logo">
+    <div class="footer__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </div>
+  <div class="footer__links">
+    <a href="/teacher/dashboard.html">Teacher</a>
+    <a href="/parent/dashboard.html">Parent</a>
+    <a href="#">Help Center</a>
+    <a href="#">Accessibility</a>
+    <a href="/settings.html">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+  </div>
+  <span>&copy; 2026 LevelAI. All rights reserved.</span>
+</footer>
+<script src="/assets/js/app.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // --- Problem data ---
+  var problems = [
+    {
+      a: [1, 4], b: [1, 2], op: '+',
+      answer: [3, 4],
+      instruction: 'Add these fractions together.',
+      steps: [
+        'Find the Least Common Denominator (LCD) of 4 and 2 → <strong>4</strong>',
+        'Convert 1/2 to 2/4',
+        'Add the numerators: 1 + 2 = <strong>3</strong>',
+        'Keep the denominator: <strong>4</strong>',
+        'Answer: <strong>3/4</strong>'
+      ]
+    },
+    {
+      a: [2, 3], b: [1, 6], op: '+',
+      answer: [5, 6],
+      instruction: 'Add these fractions together.',
+      steps: [
+        'Find the LCD of 3 and 6 → <strong>6</strong>',
+        'Convert 2/3 to 4/6',
+        'Add the numerators: 4 + 1 = <strong>5</strong>',
+        'Keep the denominator: <strong>6</strong>',
+        'Answer: <strong>5/6</strong>'
+      ]
+    },
+    {
+      a: [3, 4], b: [1, 3], op: '−',
+      answer: [5, 12],
+      instruction: 'Subtract these fractions.',
+      steps: [
+        'Find the LCD of 4 and 3 → <strong>12</strong>',
+        'Convert 3/4 to 9/12',
+        'Convert 1/3 to 4/12',
+        'Subtract the numerators: 9 − 4 = <strong>5</strong>',
+        'Keep the denominator: <strong>12</strong>',
+        'Answer: <strong>5/12</strong>'
+      ]
+    },
+    {
+      a: [1, 5], b: [2, 5], op: '+',
+      answer: [3, 5],
+      instruction: 'Add these fractions together.',
+      steps: [
+        'The denominators are already the same! → <strong>5</strong>',
+        'Add the numerators: 1 + 2 = <strong>3</strong>',
+        'Keep the denominator: <strong>5</strong>',
+        'Answer: <strong>3/5</strong>'
+      ]
+    },
+    {
+      a: [5, 6], b: [1, 4], op: '−',
+      answer: [7, 12],
+      instruction: 'Subtract these fractions.',
+      steps: [
+        'Find the LCD of 6 and 4 → <strong>12</strong>',
+        'Convert 5/6 to 10/12',
+        'Convert 1/4 to 3/12',
+        'Subtract the numerators: 10 − 3 = <strong>7</strong>',
+        'Keep the denominator: <strong>12</strong>',
+        'Answer: <strong>7/12</strong>'
+      ]
+    }
+  ];
+
+  var currentProblem = 0;
+  var correctCount = 0;
+  var answered = false;
+
+  // DOM refs
+  var progressLabel    = document.querySelector('[data-progress-label]');
+  var progressBar      = document.querySelector('[data-progress-bar]');
+  var fractionDisplay  = document.querySelector('[data-fraction-display]');
+  var instruction      = document.querySelector('[data-problem-instruction]');
+  var answerNum        = document.querySelector('[data-answer-num]');
+  var answerDen        = document.querySelector('[data-answer-den]');
+  var feedback         = document.querySelector('[data-feedback]');
+  var stepsPanel       = document.querySelector('[data-steps-panel]');
+  var stepsContent     = document.querySelector('[data-steps-content]');
+  var checkBtn         = document.querySelector('[data-check-btn]');
+  var nextBtn          = document.querySelector('[data-next-btn]');
+  var exerciseCard     = document.querySelector('[data-exercise-card]');
+  var completionCard   = document.querySelector('[data-completion-card]');
+  var finalScore       = document.querySelector('[data-final-score]');
+
+  function renderProblem() {
+    var p = problems[currentProblem];
+    answered = false;
+
+    // Update top bar
+    progressLabel.textContent = 'Problem ' + (currentProblem + 1) + ' of 5';
+    progressBar.style.width = ((currentProblem) / 5 * 100) + '%';
+
+    // Update instruction
+    instruction.textContent = p.instruction;
+
+    // Build fraction display
+    fractionDisplay.innerHTML =
+      '<div class="fraction">' +
+        '<span class="fraction__num">' + p.a[0] + '</span>' +
+        '<div class="fraction__bar"></div>' +
+        '<span class="fraction__den">' + p.a[1] + '</span>' +
+      '</div>' +
+      '<span class="fraction-op">' + p.op + '</span>' +
+      '<div class="fraction">' +
+        '<span class="fraction__num">' + p.b[0] + '</span>' +
+        '<div class="fraction__bar"></div>' +
+        '<span class="fraction__den">' + p.b[1] + '</span>' +
+      '</div>';
+
+    // Build steps
+    var stepsHtml = '';
+    for (var i = 0; i < p.steps.length; i++) {
+      stepsHtml += '<span class="step-line">' + (i + 1) + '. ' + p.steps[i] + '</span>';
+    }
+    stepsContent.innerHTML = stepsHtml;
+
+    // Reset UI
+    answerNum.value = '';
+    answerDen.value = '';
+    answerNum.disabled = false;
+    answerDen.disabled = false;
+    feedback.className = 'feedback';
+    feedback.textContent = '';
+    stepsPanel.removeAttribute('open');
+    checkBtn.classList.remove('hidden');
+    checkBtn.disabled = false;
+    nextBtn.classList.add('hidden');
+    answerNum.focus();
+  }
+
+  function checkAnswer() {
+    if (answered) return;
+
+    var numVal = parseInt(answerNum.value, 10);
+    var denVal = parseInt(answerDen.value, 10);
+
+    if (isNaN(numVal) || isNaN(denVal) || denVal === 0) {
+      feedback.className = 'feedback feedback--incorrect';
+      feedback.textContent = '🤔 Please enter a numerator and a denominator (denominator can\'t be 0).';
+      return;
+    }
+
+    var p = problems[currentProblem];
+    var studentDecimal = numVal / denVal;
+    var correctDecimal = p.answer[0] / p.answer[1];
+
+    // Compare as decimals with small tolerance for floating point
+    if (Math.abs(studentDecimal - correctDecimal) < 0.0001) {
+      answered = true;
+      correctCount++;
+      feedback.className = 'feedback feedback--correct';
+      feedback.textContent = '🎉 Correct! Great job!';
+      answerNum.disabled = true;
+      answerDen.disabled = true;
+      checkBtn.classList.add('hidden');
+
+      if (currentProblem < problems.length - 1) {
+        nextBtn.classList.remove('hidden');
+      } else {
+        // Last problem — show completion after a short pause
+        setTimeout(showCompletion, 1200);
+      }
+    } else {
+      feedback.className = 'feedback feedback--incorrect';
+      feedback.textContent = '🧡 Not quite — give it another try! Check the steps if you need a hint.';
+    }
+  }
+
+  function nextProblem() {
+    currentProblem++;
+    if (currentProblem < problems.length) {
+      renderProblem();
+    } else {
+      showCompletion();
+    }
+  }
+
+  function showCompletion() {
+    exerciseCard.classList.add('hidden');
+    completionCard.classList.remove('hidden');
+    progressBar.style.width = '100%';
+    progressLabel.textContent = 'Complete!';
+    finalScore.textContent = '✅ ' + correctCount + ' / 5 correct';
+  }
+
+  // Events
+  checkBtn.addEventListener('click', checkAnswer);
+  nextBtn.addEventListener('click', nextProblem);
+
+  // Allow Enter key to check answer or advance
+  function handleEnter(e) {
+    if (e.key === 'Enter') {
+      if (!answered) {
+        checkAnswer();
+      } else if (!nextBtn.classList.contains('hidden')) {
+        nextProblem();
+      }
+    }
+  }
+  answerNum.addEventListener('keydown', handleEnter);
+  answerDen.addEventListener('keydown', handleEnter);
+
+  // Init
+  renderProblem();
+})();
+</script>
+</body>
+</html>

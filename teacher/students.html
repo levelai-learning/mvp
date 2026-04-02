@@ -335,5 +335,21 @@
   <span>&copy; 2026 LevelAI. All rights reserved.</span>
 </footer>
 <script src="/assets/js/app.js"></script>
+<script>
+// Add IEP button to each student card
+document.querySelectorAll('.card').forEach(function(card) {
+  var nameEl = card.querySelector('[style*="font-weight:700;font-size:0.9375rem"]');
+  if (!nameEl) return;
+  var name = nameEl.textContent.trim();
+  var btnRow = card.querySelector('[style*="display:flex;gap:8px;margin-top:14px"]');
+  if (!btnRow) return;
+  var iepLink = document.createElement('a');
+  iepLink.href = '/teacher/iep.html?student=' + encodeURIComponent(name);
+  iepLink.className = 'btn btn-primary btn-sm';
+  iepLink.style.cssText = 'flex:1;text-align:center;text-decoration:none;--btn-bg:#4A6FA5;--btn-hover:#3B5C8A;';
+  iepLink.textContent = 'IEP Goals';
+  btnRow.insertBefore(iepLink, btnRow.firstChild);
+});
+</script>
 </body>
 </html>

@@ -12,10 +12,13 @@
     { "source": "/schedule",          "destination": "/schedule.html" },
     { "source": "/task",              "destination": "/task.html" },
     { "source": "/break",             "destination": "/break.html" },
+    { "source": "/reading",           "destination": "/reading.html" },
+    { "source": "/math",              "destination": "/math.html" },
     { "source": "/settings",          "destination": "/settings.html" },
     { "source": "/teacher/dashboard", "destination": "/teacher/dashboard.html" },
     { "source": "/teacher/students",  "destination": "/teacher/students.html" },
     { "source": "/teacher/lessons",   "destination": "/teacher/lessons.html" },
+    { "source": "/teacher/iep",       "destination": "/teacher/iep.html" },
     { "source": "/parent/dashboard",  "destination": "/parent/dashboard.html" },
     { "source": "/parent/messages",   "destination": "/parent/messages.html" },
     { "source": "/parent/settings",   "destination": "/parent/settings.html" }

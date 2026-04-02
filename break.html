@@ -7,6 +7,229 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="/assets/css/app.css">
+  <style>
+    /* Activity Screen */
+    .break-activity {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 48px 24px;
+      flex: 1;
+      min-height: 400px;
+    }
+    .break-activity.active { display: flex; }
+
+    .break-activity__title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+    }
+    .break-activity__prompt {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #4F7055;
+      margin-bottom: 32px;
+      min-height: 28px;
+      transition: opacity 0.4s ease;
+    }
+
+    /* Breathing Shape Container — keeps it from overlapping text */
+    .breath-shape-wrap {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Circle shape for 4-7-8 Breathing */
+    .breath-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #E8EFEA 0%, #4F7055 100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .breath-circle__label {
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      text-align: center;
+    }
+
+    /* Box/Square shape for Box Breathing */
+    .breath-box {
+      width: 120px;
+      height: 120px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, #E8EFEA 0%, #4F7055 100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .breath-box__label {
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      text-align: center;
+    }
+
+    /* Eye Tracking Area */
+    .eye-track-area {
+      width: 100%;
+      max-width: 500px;
+      height: 200px;
+      position: relative;
+      margin: 0 auto 24px;
+      background: var(--color-surface);
+      border: 2px solid var(--color-green-light);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .eye-track-target {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .eye-track-target__outer {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid #4F7055;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-green-light);
+    }
+    .eye-track-target__inner {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #4F7055;
+      box-shadow: 0 0 12px rgba(79,112,85,0.5);
+    }
+
+    /* Balance Prompt */
+    .balance-prompt {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 16px;
+      min-height: 44px;
+    }
+
+    /* Quiet Space Overlay */
+    .quiet-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.82);
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .quiet-overlay.active { display: flex; }
+    .quiet-overlay__msg {
+      color: #E8EFEA;
+      font-size: 1.5rem;
+      font-weight: 600;
+      max-width: 360px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .quiet-overlay__timer {
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* Timer display */
+    .activity-timer {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* Reentry Screen */
+    .break-reentry {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 64px 24px;
+      flex: 1;
+    }
+    .break-reentry.active { display: flex; }
+    .break-reentry__icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .break-reentry__title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      margin-bottom: 10px;
+    }
+    .break-reentry__desc {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      max-width: 400px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    /* Cooldown overlay on cards */
+    .break-option { position: relative; }
+    .break-option.cooldown {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .cooldown-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.7);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+    }
+
+    /* I'm Ready / completion button */
+    .break-activity__complete-btn {
+      display: none;
+      margin-top: 16px;
+    }
+    .break-activity__complete-btn.visible {
+      display: inline-flex;
+    }
+
+    /* Hide sections when activity is running */
+    .break-page.activity-mode .break-hero,
+    .break-page.activity-mode .break-grid,
+    .break-page.activity-mode .break-return { display: none; }
+  </style>
 </head>
 <body>
 <nav class="topnav">
@@ -48,7 +271,7 @@
   </div>
 </nav>
 
-<main class="break-page fade-in">
+<main class="break-page fade-in" id="breakPage">
 
   <div class="break-hero">
     <div class="break-hero__icon">🌿</div>
@@ -58,9 +281,9 @@
     </p>
   </div>
 
-  <div class="break-grid">
+  <div class="break-grid" id="breakGrid">
 
-    <div class="break-option" data-break-option>
+    <div class="break-option" data-break-type="box">
       <div class="break-option__icon" style="background:var(--color-blue-light);">
         <span style="font-size:1.75rem;">⬛</span>
       </div>
@@ -68,7 +291,7 @@
       <div class="break-option__desc">4 sec in, hold, out, hold</div>
     </div>
 
-    <div class="break-option" data-break-option>
+    <div class="break-option" data-break-type="478">
       <div class="break-option__icon" style="background:var(--color-blue-light);">
         <span style="font-size:1.75rem;">💨</span>
       </div>
@@ -76,7 +299,7 @@
       <div class="break-option__desc">4 sec in, 7 hold, 8 out</div>
     </div>
 
-    <div class="break-option" data-break-option>
+    <div class="break-option" data-break-type="eye">
       <div class="break-option__icon" style="background:var(--color-purple-light);">
         <span style="font-size:1.75rem;">👁️</span>
       </div>
@@ -84,7 +307,7 @@
       <div class="break-option__desc">Focus on slow moving target</div>
     </div>
 
-    <div class="break-option" data-break-option>
+    <div class="break-option" data-break-type="balance">
       <div class="break-option__icon" style="background:var(--color-green-light);">
         <span style="font-size:1.75rem;">🚶</span>
       </div>
@@ -92,7 +315,7 @@
       <div class="break-option__desc">Standing exercises</div>
     </div>
 
-    <div class="break-option" data-break-option>
+    <div class="break-option" data-break-type="quiet">
       <div class="break-option__icon" style="background:var(--color-purple-light);">
         <span style="font-size:1.75rem;">🌙</span>
       </div>
@@ -108,7 +331,30 @@
     </a>
   </div>
 
+  <!-- Activity Screen (breathing, eye, balance) -->
+  <div class="break-activity" id="activityScreen">
+    <div class="break-activity__title" id="activityTitle"></div>
+    <div class="break-activity__prompt" id="activityPrompt"></div>
+    <div id="activityArea"></div>
+    <div class="activity-timer" id="activityTimer"></div>
+    <button class="btn btn-primary btn-lg break-activity__complete-btn" id="completeBtn" style="border-radius:var(--radius-full);">I'm Ready</button>
+  </div>
+
+  <!-- Reentry Screen -->
+  <div class="break-reentry" id="reentryScreen">
+    <div class="break-reentry__icon">🌿</div>
+    <h2 class="break-reentry__title">Ready to continue?</h2>
+    <p class="break-reentry__desc">You took a moment to recharge. That's a smart move.</p>
+    <a href="/home.html" class="btn btn-primary btn-lg" style="border-radius:var(--radius-full);">Return to Dashboard →</a>
+  </div>
+
 </main>
+
+<!-- Quiet Space Overlay -->
+<div class="quiet-overlay" id="quietOverlay">
+  <div class="quiet-overlay__msg">Take a moment. Breathe. You're doing great.</div>
+  <div class="quiet-overlay__timer" id="quietTimer"></div>
+</div>
 
 <footer class="footer">
   <div class="footer__logo">
@@ -116,6 +362,8 @@
     <span>LevelAI</span>
   </div>
   <div class="footer__links">
+    <a href="/teacher/dashboard.html">Teacher</a>
+    <a href="/parent/dashboard.html">Parent</a>
     <a href="#">Help Center</a>
     <a href="#">Accessibility</a>
     <a href="/settings.html">Privacy Policy</a>
@@ -124,5 +372,326 @@
   <span>&copy; 2026 LevelAI. All rights reserved.</span>
 </footer>
 <script src="/assets/js/app.js"></script>
+<script>
+(function() {
+  const COOLDOWN_MS = 60000;
+  const COOLDOWN_KEY = 'breakCooldowns';
+  const page = document.getElementById('breakPage');
+  const grid = document.getElementById('breakGrid');
+  const activityScreen = document.getElementById('activityScreen');
+  const activityTitle = document.getElementById('activityTitle');
+  const activityPrompt = document.getElementById('activityPrompt');
+  const activityArea = document.getElementById('activityArea');
+  const activityTimer = document.getElementById('activityTimer');
+  const completeBtn = document.getElementById('completeBtn');
+  const reentryScreen = document.getElementById('reentryScreen');
+  const quietOverlay = document.getElementById('quietOverlay');
+  const quietTimer = document.getElementById('quietTimer');
+
+  let activeInterval = null;
+  let activeTimeout = null;
+  let animFrame = null;
+
+  // --- Cooldown Management ---
+  function getCooldowns() {
+    try { return JSON.parse(localStorage.getItem(COOLDOWN_KEY)) || {}; } catch(e) { return {}; }
+  }
+  function setCooldown(type) {
+    const cd = getCooldowns();
+    cd[type] = Date.now();
+    localStorage.setItem(COOLDOWN_KEY, JSON.stringify(cd));
+  }
+  function getRemainingCooldown(type) {
+    const cd = getCooldowns();
+    if (!cd[type]) return 0;
+    const elapsed = Date.now() - cd[type];
+    return Math.max(0, COOLDOWN_MS - elapsed);
+  }
+
+  function renderCooldowns() {
+    document.querySelectorAll('.break-option').forEach(function(card) {
+      const type = card.getAttribute('data-break-type');
+      const remaining = getRemainingCooldown(type);
+      // Remove old overlay
+      const old = card.querySelector('.cooldown-overlay');
+      if (old) old.remove();
+      if (remaining > 0) {
+        card.classList.add('cooldown');
+        const ov = document.createElement('div');
+        ov.className = 'cooldown-overlay';
+        ov.textContent = Math.ceil(remaining / 1000) + 's';
+        card.appendChild(ov);
+      } else {
+        card.classList.remove('cooldown');
+      }
+    });
+  }
+
+  // Tick cooldowns every second
+  setInterval(renderCooldowns, 1000);
+  renderCooldowns();
+
+  // --- Card Click Handlers ---
+  document.querySelectorAll('.break-option').forEach(function(card) {
+    card.addEventListener('click', function() {
+      const type = card.getAttribute('data-break-type');
+      if (getRemainingCooldown(type) > 0) return;
+      startActivity(type);
+    });
+  });
+
+  function startActivity(type) {
+    cleanup();
+    page.classList.add('activity-mode');
+    activityScreen.classList.add('active');
+    reentryScreen.classList.remove('active');
+    completeBtn.classList.remove('visible');
+    activityArea.innerHTML = '';
+    activityTimer.textContent = '';
+    activityPrompt.textContent = '';
+
+    if (type === 'box') startBreathing('box');
+    else if (type === '478') startBreathing('478');
+    else if (type === 'eye') startEyeTracking();
+    else if (type === 'balance') startBalance();
+    else if (type === 'quiet') startQuietSpace();
+
+    completeBtn.onclick = function() {
+      cleanup();
+      setCooldown(type);
+      renderCooldowns();
+      showReentry();
+    };
+  }
+
+  // --- Breathing Activities ---
+  function startBreathing(mode) {
+    var phases, totalCycles = 3, label, isBox = (mode === 'box');
+    if (isBox) {
+      phases = [
+        { text: 'Breathe In', dur: 4, scale: 1.4 },
+        { text: 'Hold', dur: 4, scale: 1.4 },
+        { text: 'Breathe Out', dur: 4, scale: 1 },
+        { text: 'Hold', dur: 4, scale: 1 }
+      ];
+      label = 'Box Breathing';
+    } else {
+      phases = [
+        { text: 'Breathe In', dur: 4, scale: 1.4 },
+        { text: 'Hold', dur: 7, scale: 1.4 },
+        { text: 'Breathe Out', dur: 8, scale: 1 }
+      ];
+      label = '4-7-8 Breathing';
+    }
+
+    activityTitle.textContent = label;
+
+    // Create shape wrapper + shape (box or circle)
+    var wrap = document.createElement('div');
+    wrap.className = 'breath-shape-wrap';
+    var shape = document.createElement('div');
+    var shapeLabel = document.createElement('div');
+
+    if (isBox) {
+      shape.className = 'breath-box';
+      shapeLabel.className = 'breath-box__label';
+    } else {
+      shape.className = 'breath-circle';
+      shapeLabel.className = 'breath-circle__label';
+    }
+    shape.appendChild(shapeLabel);
+    wrap.appendChild(shape);
+    activityArea.appendChild(wrap);
+
+    // Description text
+    var desc = document.createElement('div');
+    desc.style.cssText = 'font-size:0.8125rem;color:var(--color-text-secondary);max-width:360px;margin:0 auto 16px;line-height:1.5;';
+    if (isBox) {
+      desc.textContent = 'Follow the box as it grows and shrinks. Breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds, hold for 4 seconds.';
+    } else {
+      desc.textContent = 'Follow the circle as it expands and contracts. Breathe in for 4 seconds, hold for 7 seconds, and breathe out for 8 seconds.';
+    }
+    activityArea.appendChild(desc);
+
+    var cycle = 0, phaseIdx = 0;
+
+    function runPhase() {
+      if (cycle >= totalCycles) {
+        activityPrompt.textContent = 'Well done!';
+        shapeLabel.textContent = '✓';
+        activityTimer.textContent = '';
+        completeBtn.classList.add('visible');
+        return;
+      }
+      var p = phases[phaseIdx];
+      activityPrompt.textContent = p.text;
+      shapeLabel.textContent = p.text;
+      shape.style.transition = 'transform ' + p.dur + 's ease-in-out';
+      shape.style.transform = 'scale(' + p.scale + ')';
+
+      var secLeft = p.dur;
+      activityTimer.textContent = 'Cycle ' + (cycle + 1) + ' of ' + totalCycles + '  ·  ' + secLeft + 's';
+      activeInterval = setInterval(function() {
+        secLeft--;
+        if (secLeft >= 0) activityTimer.textContent = 'Cycle ' + (cycle + 1) + ' of ' + totalCycles + '  ·  ' + secLeft + 's';
+      }, 1000);
+
+      activeTimeout = setTimeout(function() {
+        clearInterval(activeInterval);
+        phaseIdx++;
+        if (phaseIdx >= phases.length) {
+          phaseIdx = 0;
+          cycle++;
+        }
+        runPhase();
+      }, p.dur * 1000);
+    }
+    runPhase();
+  }
+
+  // --- Eye Tracking ---
+  function startEyeTracking() {
+    activityTitle.textContent = 'Eye Tracking';
+    activityPrompt.textContent = 'Keep your eyes on the target — follow it slowly';
+
+    var area = document.createElement('div');
+    area.className = 'eye-track-area';
+
+    // Bullseye target (outer ring + inner dot)
+    var target = document.createElement('div');
+    target.className = 'eye-track-target';
+    target.innerHTML = '<div class="eye-track-target__outer"><div class="eye-track-target__inner"></div></div>';
+    area.appendChild(target);
+    activityArea.appendChild(area);
+
+    // Description
+    var desc = document.createElement('div');
+    desc.style.cssText = 'font-size:0.8125rem;color:var(--color-text-secondary);max-width:360px;margin:0 auto 16px;line-height:1.5;';
+    desc.textContent = 'Track the moving target with your eyes only — keep your head still. This exercise strengthens your visual attention and trains your brain to maintain focus.';
+    activityArea.appendChild(desc);
+
+    var duration = 30;
+    var secLeft = duration;
+    activityTimer.textContent = secLeft + 's remaining';
+    activeInterval = setInterval(function() {
+      secLeft--;
+      if (secLeft >= 0) activityTimer.textContent = secLeft + 's remaining';
+    }, 1000);
+
+    var startTime = performance.now();
+    var totalMs = duration * 1000;
+    var cycleDur = 5000; // 5s per sweep (slower for eye tracking)
+
+    function animate(ts) {
+      var elapsed = ts - startTime;
+      if (elapsed >= totalMs) {
+        cancelAnimationFrame(animFrame);
+        clearInterval(activeInterval);
+        activityPrompt.textContent = 'Great focus!';
+        activityTimer.textContent = '';
+        completeBtn.classList.add('visible');
+        return;
+      }
+      var cyclePos = (elapsed % cycleDur) / cycleDur;
+      // Smooth ping-pong with easing
+      var pct = cyclePos < 0.5 ? cyclePos * 2 : 2 - cyclePos * 2;
+      // Apply ease-in-out
+      pct = pct < 0.5 ? 2 * pct * pct : 1 - Math.pow(-2 * pct + 2, 2) / 2;
+      var maxLeft = area.offsetWidth - target.offsetWidth;
+      target.style.left = (pct * maxLeft) + 'px';
+      animFrame = requestAnimationFrame(animate);
+    }
+    animFrame = requestAnimationFrame(animate);
+  }
+
+  // --- Balance Movements ---
+  function startBalance() {
+    activityTitle.textContent = 'Balance Movements';
+    var prompts = [
+      'Stand on one foot',
+      'Stretch arms up',
+      'Touch your toes'
+    ];
+    var promptEl = document.createElement('div');
+    promptEl.className = 'balance-prompt';
+    activityArea.appendChild(promptEl);
+
+    var duration = 30;
+    var interval = 10;
+    var secLeft = duration;
+    var promptIdx = 0;
+
+    promptEl.textContent = prompts[promptIdx];
+    activityPrompt.textContent = 'Follow along';
+    activityTimer.textContent = secLeft + 's remaining';
+
+    activeInterval = setInterval(function() {
+      secLeft--;
+      if (secLeft <= 0) {
+        clearInterval(activeInterval);
+        activityPrompt.textContent = 'Nice work!';
+        activityTimer.textContent = '';
+        promptEl.textContent = '';
+        completeBtn.classList.add('visible');
+        return;
+      }
+      activityTimer.textContent = secLeft + 's remaining';
+      if (secLeft % interval === 0) {
+        promptIdx++;
+        if (promptIdx < prompts.length) {
+          promptEl.textContent = prompts[promptIdx];
+        }
+      }
+    }, 1000);
+  }
+
+  // --- Quiet Space ---
+  function startQuietSpace() {
+    // Hide activity screen, show overlay instead
+    activityScreen.classList.remove('active');
+    quietOverlay.classList.add('active');
+
+    var duration = 30;
+    var secLeft = duration;
+    quietTimer.textContent = secLeft + 's remaining';
+
+    activeInterval = setInterval(function() {
+      secLeft--;
+      if (secLeft <= 0) {
+        clearInterval(activeInterval);
+        quietOverlay.classList.remove('active');
+        setCooldown('quiet');
+        renderCooldowns();
+        page.classList.remove('activity-mode');
+        showReentry();
+        return;
+      }
+      quietTimer.textContent = secLeft + 's remaining';
+    }, 1000);
+  }
+
+  // --- Show Reentry ---
+  function showReentry() {
+    activityScreen.classList.remove('active');
+    quietOverlay.classList.remove('active');
+    page.classList.add('activity-mode');
+    reentryScreen.classList.add('active');
+  }
+
+  // --- Cleanup ---
+  function cleanup() {
+    if (activeInterval) clearInterval(activeInterval);
+    if (activeTimeout) clearTimeout(activeTimeout);
+    if (animFrame) cancelAnimationFrame(animFrame);
+    activeInterval = null;
+    activeTimeout = null;
+    animFrame = null;
+    activityScreen.classList.remove('active');
+    quietOverlay.classList.remove('active');
+    reentryScreen.classList.remove('active');
+    page.classList.remove('activity-mode');
+  }
+})();
+</script>
 </body>
 </html>

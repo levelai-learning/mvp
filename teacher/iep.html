@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IEP Management — LevelAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <style>
+    .iep-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .iep-header__back {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .iep-header__back:hover { color: var(--color-text-primary); }
+
+    /* Grade cards row */
+    .grade-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .grade-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .grade-card__subject {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+    }
+    .grade-card__letter {
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    /* IEP Goal Card */
+    .iep-goal {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+    }
+    .iep-goal__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .iep-goal__title {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+    .iep-goal__subject-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--color-green-light);
+      color: var(--color-green);
+    }
+    .iep-goal__progress-section {
+      margin-bottom: 16px;
+    }
+    .iep-goal__progress-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+      margin-bottom: 6px;
+    }
+    .iep-goal__progress-current {
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+    .iep-goal__progress-target {
+      color: var(--color-text-muted);
+    }
+    .iep-goal__accommodations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .iep-goal__accommodation-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: var(--color-blue-light);
+      color: var(--color-blue);
+      border: 1px solid transparent;
+    }
+    .iep-goal__tasks {
+      border-top: 1px solid var(--color-border);
+      padding-top: 16px;
+    }
+    .iep-goal__task {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+    }
+    .iep-goal__task + .iep-goal__task {
+      border-top: 1px solid var(--color-border);
+    }
+    .iep-goal__task-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+    .iep-goal__task-status {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: var(--radius-full);
+    }
+    .task-available { background: var(--color-green-light); color: var(--color-green); }
+    .task-in-progress { background: var(--color-blue-light); color: var(--color-blue); }
+    .task-locked { background: var(--color-border); color: var(--color-text-muted); }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-backdrop.active { display: flex; }
+    .modal {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+    }
+    .modal__title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      margin-bottom: 24px;
+    }
+    .modal__actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .checkbox-grid label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+    .checkbox-grid input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #4F7055;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #4F7055;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+      z-index: 300;
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .toast.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .section-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+<nav class="topnav topnav--teacher">
+  <a href="/teacher/dashboard.html" class="topnav__logo">
+    <div class="topnav__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </a>
+
+  <div class="topnav__nav">
+    <a href="/teacher/dashboard.html" class="">Classroom</a>
+    <a href="/teacher/students" class="">Students</a>
+    <a href="/teacher/lessons"  class="">Lessons</a>
+  </div>
+
+  <div class="topnav__controls">
+    <div class="theme-toggle">
+      <span>Light</span>
+      <div class="theme-toggle__track" data-theme-track>
+        <div class="theme-toggle__thumb"></div>
+      </div>
+      <span>Dark</span>
+    </div>
+
+    <span class="topnav__datetime" data-clock></span>
+
+    <div class="topnav__user">
+      <div class="topnav__user-info">
+        <div class="topnav__user-name">Ms. Rivera</div>
+        <div class="topnav__user-role">Teacher</div>
+      </div>
+      <div class="topnav__avatar-placeholder">👩‍🏫</div>
+    </div>
+  </div>
+</nav>
+
+<main class="page-wrapper page-wrapper--full fade-in">
+
+  <!-- Header -->
+  <div class="iep-header">
+    <div>
+      <a href="/teacher/dashboard.html" class="iep-header__back">← Back to Classroom</a>
+      <h1 class="page-title" id="studentName">Student IEP</h1>
+      <p class="page-subtitle" style="margin-bottom:0;">Individualized Education Program</p>
+    </div>
+    <button class="btn btn-primary" id="newGoalBtn" style="--btn-bg:#4A6FA5;--btn-hover:#3B5C8A;">+ New IEP Goal</button>
+  </div>
+
+  <!-- Grade Summary Cards -->
+  <div class="section-label">Grade Summary</div>
+  <div class="grade-cards">
+    <div class="grade-card">
+      <div class="grade-card__subject">Reading</div>
+      <div class="grade-card__letter" style="color:#4A6FA5;">B</div>
+    </div>
+    <div class="grade-card">
+      <div class="grade-card__subject">Math</div>
+      <div class="grade-card__letter" style="color:#E07238;">C+</div>
+    </div>
+    <div class="grade-card">
+      <div class="grade-card__subject">Science</div>
+      <div class="grade-card__letter" style="color:#4A6FA5;">B-</div>
+    </div>
+    <div class="grade-card">
+      <div class="grade-card__subject">Writing</div>
+      <div class="grade-card__letter" style="color:#4F7055;">A-</div>
+    </div>
+  </div>
+
+  <!-- Existing IEP Goals -->
+  <div class="section-label">IEP Goals</div>
+  <div id="goalsContainer">
+
+    <!-- Goal 1: Reading Comprehension -->
+    <div class="iep-goal">
+      <div class="iep-goal__header">
+        <div>
+          <div class="iep-goal__title">Reading Comprehension Goal: 80%</div>
+          <span class="iep-goal__subject-badge">Reading</span>
+        </div>
+      </div>
+      <div class="iep-goal__progress-section">
+        <div class="iep-goal__progress-labels">
+          <span class="iep-goal__progress-current">Current: 72%</span>
+          <span class="iep-goal__progress-target">Target: 80%</span>
+        </div>
+        <div class="progress-bar-wrap" style="height:8px;">
+          <div class="progress-bar" style="width:90%;"></div>
+        </div>
+      </div>
+      <div class="section-label" style="margin-top:4px;">Accommodations</div>
+      <div class="iep-goal__accommodations">
+        <span class="iep-goal__accommodation-tag">Read Aloud</span>
+        <span class="iep-goal__accommodation-tag">Larger Text</span>
+        <span class="iep-goal__accommodation-tag">Extra Time</span>
+      </div>
+      <div class="iep-goal__tasks">
+        <div class="section-label">Assigned Tasks</div>
+        <div class="iep-goal__task">
+          <span class="iep-goal__task-name">Read "The Tell-Tale Heart"</span>
+          <span class="iep-goal__task-status task-available">Available</span>
+        </div>
+        <div class="iep-goal__task">
+          <span class="iep-goal__task-name">Reading Comprehension Quiz</span>
+          <span class="iep-goal__task-status task-locked">Locked</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Goal 2: Math Computation -->
+    <div class="iep-goal">
+      <div class="iep-goal__header">
+        <div>
+          <div class="iep-goal__title">Math Computation Goal: 85%</div>
+          <span class="iep-goal__subject-badge" style="background:var(--color-blue-light);color:var(--color-blue);">Math</span>
+        </div>
+      </div>
+      <div class="iep-goal__progress-section">
+        <div class="iep-goal__progress-labels">
+          <span class="iep-goal__progress-current">Current: 78%</span>
+          <span class="iep-goal__progress-target">Target: 85%</span>
+        </div>
+        <div class="progress-bar-wrap" style="height:8px;">
+          <div class="progress-bar" style="width:91.8%;background:var(--color-blue);"></div>
+        </div>
+      </div>
+      <div class="section-label" style="margin-top:4px;">Accommodations</div>
+      <div class="iep-goal__accommodations">
+        <span class="iep-goal__accommodation-tag">Break Reminders</span>
+        <span class="iep-goal__accommodation-tag">Extra Time</span>
+        <span class="iep-goal__accommodation-tag">Step-by-Step Guidance</span>
+      </div>
+      <div class="iep-goal__tasks">
+        <div class="section-label">Assigned Tasks</div>
+        <div class="iep-goal__task">
+          <span class="iep-goal__task-name">Fractions 101</span>
+          <span class="iep-goal__task-status task-in-progress">In Progress</span>
+        </div>
+        <div class="iep-goal__task">
+          <span class="iep-goal__task-name">Geometry Basics</span>
+          <span class="iep-goal__task-status task-locked">Locked</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- New IEP Goal Modal -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <div class="modal__title">New IEP Goal</div>
+    <form id="iepForm">
+      <div class="form-group mb-16">
+        <label class="form-label">Goal Title <span class="required">*</span></label>
+        <input class="form-input" type="text" id="goalTitle" placeholder="e.g., Reading Comprehension Goal: 80%" required>
+      </div>
+      <div class="form-group mb-16">
+        <label class="form-label">Description</label>
+        <textarea class="form-input" id="goalDesc" rows="3" placeholder="Describe the goal..."></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" class="mb-16">
+        <div class="form-group">
+          <label class="form-label">Subject <span class="required">*</span></label>
+          <select class="form-input" id="goalSubject" required>
+            <option value="">Select...</option>
+            <option value="Reading">Reading</option>
+            <option value="Math">Math</option>
+            <option value="Science">Science</option>
+            <option value="Writing">Writing</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target % <span class="required">*</span></label>
+          <input class="form-input" type="number" id="goalTarget" min="1" max="100" placeholder="85" required>
+        </div>
+      </div>
+      <div class="form-group mb-16">
+        <label class="form-label">Accommodations</label>
+        <div class="checkbox-grid">
+          <label><input type="checkbox" name="accommodation" value="Read Aloud"> Read Aloud</label>
+          <label><input type="checkbox" name="accommodation" value="Larger Text"> Larger Text</label>
+          <label><input type="checkbox" name="accommodation" value="Extra Time"> Extra Time</label>
+          <label><input type="checkbox" name="accommodation" value="Break Reminders"> Break Reminders</label>
+          <label><input type="checkbox" name="accommodation" value="Step-by-Step"> Step-by-Step</label>
+          <label><input type="checkbox" name="accommodation" value="Reduced Distractions"> Reduced Distractions</label>
+          <label><input type="checkbox" name="accommodation" value="Visual Aids"> Visual Aids</label>
+          <label><input type="checkbox" name="accommodation" value="Check-ins"> Check-ins</label>
+        </div>
+      </div>
+      <div class="form-group mb-16">
+        <label class="form-label">Milestones (up to 3)</label>
+        <input class="form-input" type="text" id="milestone1" placeholder="Milestone 1" style="margin-bottom:8px;">
+        <input class="form-input" type="text" id="milestone2" placeholder="Milestone 2" style="margin-bottom:8px;">
+        <input class="form-input" type="text" id="milestone3" placeholder="Milestone 3">
+      </div>
+      <div class="modal__actions">
+        <button type="button" class="btn btn-outline" id="cancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Goal</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">IEP goal created</div>
+
+<footer class="footer">
+  <div class="footer__logo">
+    <div class="footer__logo-mark">🌿</div>
+    <span>LevelAI</span>
+  </div>
+  <div class="footer__links">
+    <a href="/teacher/dashboard.html">Teacher</a>
+    <a href="/parent/dashboard">Parent</a>
+    <a href="#">Help Center</a>
+    <a href="#">Accessibility</a>
+    <a href="/settings">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+  </div>
+  <span>&copy; 2026 LevelAI. All rights reserved.</span>
+</footer>
+<script src="/assets/js/app.js"></script>
+<script>
+(function() {
+  var IEP_KEY = 'iepGoals';
+
+  // Read student name from URL
+  var params = new URLSearchParams(window.location.search);
+  var studentName = params.get('student') || 'Student';
+  document.getElementById('studentName').textContent = studentName + ' — IEP';
+
+  // Modal handling
+  var backdrop = document.getElementById('modalBackdrop');
+  var newGoalBtn = document.getElementById('newGoalBtn');
+  var cancelBtn = document.getElementById('cancelBtn');
+  var form = document.getElementById('iepForm');
+  var toast = document.getElementById('toast');
+  var goalsContainer = document.getElementById('goalsContainer');
+
+  newGoalBtn.addEventListener('click', function() {
+    backdrop.classList.add('active');
+  });
+  cancelBtn.addEventListener('click', function() {
+    backdrop.classList.remove('active');
+  });
+  backdrop.addEventListener('click', function(e) {
+    if (e.target === backdrop) backdrop.classList.remove('active');
+  });
+
+  // Load saved goals
+  function getSavedGoals() {
+    try { return JSON.parse(localStorage.getItem(IEP_KEY + '_' + studentName)) || []; } catch(e) { return []; }
+  }
+  function saveGoals(goals) {
+    localStorage.setItem(IEP_KEY + '_' + studentName, JSON.stringify(goals));
+  }
+
+  function renderSavedGoals() {
+    // Remove previously rendered custom goals
+    document.querySelectorAll('.iep-goal--custom').forEach(function(el) { el.remove(); });
+    var goals = getSavedGoals();
+    goals.forEach(function(g) {
+      var el = document.createElement('div');
+      el.className = 'iep-goal iep-goal--custom';
+
+      var subjectColors = {
+        'Reading': { bg: 'var(--color-green-light)', color: 'var(--color-green)' },
+        'Math': { bg: 'var(--color-blue-light)', color: 'var(--color-blue)' },
+        'Science': { bg: 'var(--color-purple-light)', color: 'var(--color-purple)' },
+        'Writing': { bg: 'var(--color-orange-light)', color: 'var(--color-orange)' }
+      };
+      var sc = subjectColors[g.subject] || subjectColors['Reading'];
+
+      var html = '<div class="iep-goal__header"><div>';
+      html += '<div class="iep-goal__title">' + escHtml(g.title) + '</div>';
+      html += '<span class="iep-goal__subject-badge" style="background:' + sc.bg + ';color:' + sc.color + ';">' + escHtml(g.subject) + '</span>';
+      html += '</div></div>';
+
+      if (g.description) {
+        html += '<p style="font-size:0.875rem;color:var(--color-text-secondary);margin-bottom:16px;">' + escHtml(g.description) + '</p>';
+      }
+
+      html += '<div class="iep-goal__progress-section">';
+      html += '<div class="iep-goal__progress-labels"><span class="iep-goal__progress-current">Current: 0%</span><span class="iep-goal__progress-target">Target: ' + g.target + '%</span></div>';
+      html += '<div class="progress-bar-wrap" style="height:8px;"><div class="progress-bar" style="width:0%;"></div></div>';
+      html += '</div>';
+
+      if (g.accommodations && g.accommodations.length) {
+        html += '<div class="section-label" style="margin-top:4px;">Accommodations</div>';
+        html += '<div class="iep-goal__accommodations">';
+        g.accommodations.forEach(function(a) {
+          html += '<span class="iep-goal__accommodation-tag">' + escHtml(a) + '</span>';
+        });
+        html += '</div>';
+      }
+
+      if (g.milestones && g.milestones.length) {
+        html += '<div class="iep-goal__tasks"><div class="section-label">Milestones</div>';
+        g.milestones.forEach(function(m) {
+          html += '<div class="iep-goal__task"><span class="iep-goal__task-name">' + escHtml(m) + '</span><span class="iep-goal__task-status task-locked">Pending</span></div>';
+        });
+        html += '</div>';
+      }
+
+      el.innerHTML = html;
+      goalsContainer.appendChild(el);
+    });
+  }
+
+  function escHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  // Form submit
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var title = document.getElementById('goalTitle').value.trim();
+    var desc = document.getElementById('goalDesc').value.trim();
+    var subject = document.getElementById('goalSubject').value;
+    var target = document.getElementById('goalTarget').value;
+    var accommodations = [];
+    document.querySelectorAll('input[name="accommodation"]:checked').forEach(function(cb) {
+      accommodations.push(cb.value);
+    });
+    var milestones = [];
+    ['milestone1','milestone2','milestone3'].forEach(function(id) {
+      var v = document.getElementById(id).value.trim();
+      if (v) milestones.push(v);
+    });
+
+    var goals = getSavedGoals();
+    goals.push({ title: title, description: desc, subject: subject, target: target, accommodations: accommodations, milestones: milestones });
+    saveGoals(goals);
+
+    form.reset();
+    backdrop.classList.remove('active');
+    renderSavedGoals();
+    showToast();
+  });
+
+  function showToast() {
+    toast.classList.add('visible');
+    setTimeout(function() { toast.classList.remove('visible'); }, 3000);
+  }
+
+  // Initial render
+  renderSavedGoals();
+})();
+</script>
+</body>
+</html>

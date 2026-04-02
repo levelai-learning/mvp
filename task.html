@@ -3,10 +3,174 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Algebra: Linear Equations — LevelAI</title>
+  <title>My Tasks &amp; Goals — LevelAI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="/assets/css/app.css">
+  <style>
+    .iep-section { margin-bottom: 36px; }
+
+    .iep-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+    }
+
+    .iep-card__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .iep-card__subject {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .iep-card__subject--reading {
+      background: var(--color-blue-light);
+      color: var(--color-blue);
+    }
+    .iep-card__subject--math {
+      background: var(--color-green-light);
+      color: var(--color-green);
+    }
+
+    .iep-card__title {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    .iep-card__desc {
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .iep-card__pct {
+      font-size: 0.875rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* Progress bar */
+    .iep-progress {
+      margin-bottom: 16px;
+    }
+    .iep-progress__labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      margin-bottom: 6px;
+    }
+    .iep-progress__bar {
+      height: 8px;
+      background: var(--color-border);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    .iep-progress__fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      transition: width 0.5s ease;
+    }
+
+    /* Accommodations */
+    .iep-accommodations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .iep-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      background: var(--color-green-light);
+      color: var(--color-green);
+    }
+
+    /* Task list */
+    .iep-tasks {
+      border-top: 1px solid var(--color-border);
+      padding-top: 12px;
+    }
+    .iep-task {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-border);
+      text-decoration: none;
+      color: inherit;
+      transition: background var(--transition);
+      margin: 0 -8px;
+      padding-left: 8px;
+      padding-right: 8px;
+      border-radius: var(--radius-sm);
+    }
+    .iep-task:last-child { border-bottom: none; }
+    .iep-task:hover { background: var(--color-green-light); }
+    .iep-task--locked {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .iep-task__icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      width: 24px;
+      text-align: center;
+    }
+    .iep-task__icon--done { color: var(--color-green); }
+    .iep-task__icon--progress { color: var(--color-blue); }
+    .iep-task__icon--available { color: var(--color-orange); }
+    .iep-task__icon--locked { color: var(--color-text-muted); }
+
+    .iep-task__info { flex: 1; }
+    .iep-task__title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    .iep-task__meta {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+    .iep-task__arrow {
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* Section title */
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
 </head>
 <body>
 <nav class="topnav">
@@ -50,84 +214,110 @@
 
 <main class="page-wrapper fade-in" style="max-width:760px;">
 
-  <!-- Task header -->
-  <div class="task-header">
-    <a href="/home.html" class="task-back">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Back to Tasks
-    </a>
-    <div class="task-subject-badge">
-      🔢 Math
+  <!-- Page Header -->
+  <div style="margin-bottom:28px;">
+    <h1 class="page-title">My Tasks &amp; IEP Goals</h1>
+    <p class="page-subtitle">Your teacher has set these goals to help you succeed. Track your progress here.</p>
+  </div>
+
+  <!-- IEP Goal 1: Reading -->
+  <div class="iep-section">
+    <div class="iep-card">
+      <div class="iep-card__header">
+        <div>
+          <div class="iep-card__subject iep-card__subject--reading">📖 Reading</div>
+          <div class="iep-card__title">Reading Comprehension Goal: 80%</div>
+        </div>
+        <div class="iep-card__pct" style="color:var(--color-blue);">72% / 80%</div>
+      </div>
+      <div class="iep-card__desc">
+        Improve reading comprehension from 65% to 80% accuracy on grade-level texts by end of semester.
+      </div>
+
+      <div class="iep-progress">
+        <div class="iep-progress__labels">
+          <span>Progress toward goal</span>
+          <span>90%</span>
+        </div>
+        <div class="iep-progress__bar">
+          <div class="iep-progress__fill" style="width:90%;background:var(--color-blue);"></div>
+        </div>
+      </div>
+
+      <div class="iep-accommodations">
+        <span class="iep-badge">✓ Read Aloud Available</span>
+        <span class="iep-badge">✓ Larger Text</span>
+        <span class="iep-badge">✓ Extra Time</span>
+      </div>
+
+      <div class="iep-tasks">
+        <a href="/reading.html" class="iep-task">
+          <span class="iep-task__icon iep-task__icon--available">○</span>
+          <div class="iep-task__info">
+            <div class="iep-task__title">Read "The Tell-Tale Heart"</div>
+            <div class="iep-task__meta">15 mins · 4 sections</div>
+          </div>
+          <span class="iep-task__arrow">→</span>
+        </a>
+        <div class="iep-task iep-task--locked">
+          <span class="iep-task__icon iep-task__icon--locked">🔒</span>
+          <div class="iep-task__info">
+            <div class="iep-task__title">Reading Comprehension Quiz</div>
+            <div class="iep-task__meta">5 mins · Unlocks after reading</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Focus card -->
-  <div class="task-focus-card">
-    <h1 class="task-focus-card__title">Algebra: Linear Equations</h1>
-    <p class="task-focus-card__desc">
-      Complete the practice worksheet and review the video lesson on solving for x. Focus on isolating the variable.
-    </p>
+  <!-- IEP Goal 2: Math -->
+  <div class="iep-section">
+    <div class="iep-card">
+      <div class="iep-card__header">
+        <div>
+          <div class="iep-card__subject iep-card__subject--math">🔢 Math</div>
+          <div class="iep-card__title">Math Computation Goal: 85%</div>
+        </div>
+        <div class="iep-card__pct" style="color:var(--color-green);">78% / 85%</div>
+      </div>
+      <div class="iep-card__desc">
+        Solve fraction problems with 85% accuracy using step-by-step methods by end of semester.
+      </div>
 
-    <!-- Timer Ring -->
-    <div class="timer-ring">
-      <svg width="160" height="160" viewBox="0 0 160 160">
-        <circle cx="80" cy="80" r="72" fill="none" stroke="var(--color-border)" stroke-width="8"/>
-        <circle
-          cx="80" cy="80" r="72"
-          fill="none"
-          stroke="var(--color-green)"
-          stroke-width="8"
-          stroke-linecap="round"
-          stroke-dasharray="452.39"
-          stroke-dashoffset="0"
-          data-timer-ring
-          style="transition:stroke-dashoffset 1s linear;"
-        />
-      </svg>
-      <div class="timer-ring__label">
-        <div class="timer-ring__time" data-timer>45:00</div>
-        <div class="timer-ring__sub">Remaining</div>
+      <div class="iep-progress">
+        <div class="iep-progress__labels">
+          <span>Progress toward goal</span>
+          <span>92%</span>
+        </div>
+        <div class="iep-progress__bar">
+          <div class="iep-progress__fill" style="width:92%;background:var(--color-green);"></div>
+        </div>
+      </div>
+
+      <div class="iep-accommodations">
+        <span class="iep-badge">✓ Break Reminders</span>
+        <span class="iep-badge">✓ Extra Time</span>
+        <span class="iep-badge">✓ Step-by-Step Guidance</span>
+      </div>
+
+      <div class="iep-tasks">
+        <a href="/math.html" class="iep-task">
+          <span class="iep-task__icon iep-task__icon--progress" style="font-size:0.875rem;">▶</span>
+          <div class="iep-task__info">
+            <div class="iep-task__title">Fractions 101</div>
+            <div class="iep-task__meta">20 mins · 5 problems · In Progress</div>
+          </div>
+          <span class="iep-task__arrow">→</span>
+        </a>
+        <div class="iep-task iep-task--locked">
+          <span class="iep-task__icon iep-task__icon--locked">🔒</span>
+          <div class="iep-task__info">
+            <div class="iep-task__title">Geometry Basics</div>
+            <div class="iep-task__meta">20 mins · Unlocks after Fractions</div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="task-actions">
-      <button class="btn btn-primary" data-timer-start style="min-width:160px;">
-        ▶ Start Timer
-      </button>
-      <button class="btn btn-outline" data-complete-task>
-        ✓ Complete
-      </button>
-    </div>
-  </div>
-
-  <!-- Checklist -->
-  <div class="checklist-card">
-    <div class="checklist-header">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="2">
-        <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
-      </svg>
-      Task Steps
-    </div>
-
-    <div class="checklist-item checked" data-checklist-item>
-      <div class="checklist-checkbox">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-      </div>
-      <span class="checklist-label">Watch introductory video</span>
-    </div>
-
-    <div class="checklist-item active" data-checklist-item>
-      <div class="checklist-checkbox"></div>
-      <span class="checklist-label">Complete worksheet problems 1–10</span>
-    </div>
-
-    <div class="checklist-item" data-checklist-item>
-      <div class="checklist-checkbox"></div>
-      <span class="checklist-label">Check answers with key</span>
-    </div>
-
   </div>
 
 </main>
@@ -138,6 +328,8 @@
     <span>LevelAI</span>
   </div>
   <div class="footer__links">
+    <a href="/teacher/dashboard.html">Teacher</a>
+    <a href="/parent/dashboard.html">Parent</a>
     <a href="#">Help Center</a>
     <a href="#">Accessibility</a>
     <a href="/settings.html">Privacy Policy</a>
