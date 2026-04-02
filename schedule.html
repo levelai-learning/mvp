@@ -70,63 +70,45 @@
       <div class="currently-running__icon">🕐</div>
       <div>
         <div class="currently-running__title">Currently Running</div>
-        <div class="currently-running__sub">Morning Focus Block · Ends in 45m</div>
+        <div class="currently-running__sub">Reading: The Tell-Tale Heart · 4 sections</div>
       </div>
     </div>
-    <a href="/task.html" class="btn btn-primary btn-sm">Resume Task</a>
+    <a href="/reading.html" class="btn btn-primary btn-sm">Resume Reading</a>
   </div>
 
   <!-- Timeline -->
   <div class="timeline">
 
-    <!-- 8:00 AM — Done -->
+    <!-- 8:00 AM — Reading (Active) -->
     <div class="timeline-item">
       <div class="timeline-time">
-        <div class="timeline-time__hour">08:00 AM</div>
-        <div class="timeline-time__duration">45 mins</div>
-      </div>
-      <div class="timeline-track">
-        <div class="timeline-dot done"></div>
-        <div class="timeline-line"></div>
-      </div>
-      <div class="timeline-content">
-        <div class="timeline-block done">
-          <div class="timeline-block__title">
-            <span style="margin-right:6px;">📖</span> Morning Reading
-          </div>
-          <div class="timeline-block__desc">Chapter 4: Ecosystems</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 9:00 AM — Active -->
-    <div class="timeline-item">
-      <div class="timeline-time">
-        <div class="timeline-time__hour active">09:00 AM</div>
-        <div class="timeline-time__duration">90 mins</div>
+        <div class="timeline-time__hour active">08:00 AM</div>
+        <div class="timeline-time__duration">15 mins</div>
       </div>
       <div class="timeline-track">
         <div class="timeline-dot active"></div>
         <div class="timeline-line"></div>
       </div>
       <div class="timeline-content">
-        <div class="timeline-block active">
-          <div class="timeline-block__badge badge-priority">🔵 High Priority</div>
-          <div class="timeline-block__title">Math Focus</div>
-          <div class="timeline-block__desc">Algebra: Linear Equations practice worksheet and video review.</div>
+        <div class="timeline-block active" style="cursor:pointer;" onclick="window.location.href='/reading.html'">
+          <div class="timeline-block__badge badge-priority">🔵 Current Task</div>
+          <div class="timeline-block__title">
+            <span style="margin-right:6px;">📖</span> Reading: The Tell-Tale Heart
+          </div>
+          <div class="timeline-block__desc">Read and answer comprehension questions on Poe's classic story.</div>
           <div class="timeline-block__footer">
-            <span>2 of 3 tasks remaining</span>
-            <a href="/task.html">View Tasks →</a>
+            <span>4 sections to complete</span>
+            <a href="/reading.html">Start Reading →</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 10:30 AM — Break -->
+    <!-- 8:30 AM — Break -->
     <div class="timeline-item">
       <div class="timeline-time">
-        <div class="timeline-time__hour">10:30 AM</div>
-        <div class="timeline-time__duration">15 mins</div>
+        <div class="timeline-time__hour">8:30 AM</div>
+        <div class="timeline-time__duration">10 mins</div>
       </div>
       <div class="timeline-track">
         <div class="timeline-dot break"></div>
@@ -135,42 +117,114 @@
       <div class="timeline-content">
         <div class="timeline-block break-block">
           <div class="timeline-block__title">🧘 Scheduled Break</div>
-          <div class="timeline-block__desc">Time to stretch and grab water.</div>
+          <div class="timeline-block__desc">Time to stretch, breathe, or grab water.</div>
         </div>
       </div>
     </div>
 
-    <!-- 10:45 AM — Upcoming -->
+    <!-- 8:40 AM — Math -->
     <div class="timeline-item">
       <div class="timeline-time">
-        <div class="timeline-time__hour">10:45 AM</div>
-        <div class="timeline-time__duration">60 mins</div>
+        <div class="timeline-time__hour">8:40 AM</div>
+        <div class="timeline-time__duration">20 mins</div>
       </div>
       <div class="timeline-track">
         <div class="timeline-dot"></div>
         <div class="timeline-line"></div>
       </div>
       <div class="timeline-content">
-        <div class="timeline-block">
-          <div class="timeline-block__title">🔬 Science Lab</div>
-          <div class="timeline-block__desc">Review biology slides for tomorrow's quiz.</div>
+        <div class="timeline-block" style="cursor:pointer;" onclick="window.location.href='/math.html'">
+          <div class="timeline-block__title">
+            <span style="margin-right:6px;">🔢</span> Math: Fractions 101
+          </div>
+          <div class="timeline-block__desc">Practice adding and subtracting fractions with step-by-step hints.</div>
+          <div class="timeline-block__footer">
+            <span>5 problems</span>
+            <a href="/math.html">Start Math →</a>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 12:00 PM — Lunch -->
+    <!-- 9:00 AM — Lunch -->
     <div class="timeline-item">
       <div class="timeline-time">
-        <div class="timeline-time__hour">12:00 PM</div>
-        <div class="timeline-time__duration">45 mins</div>
+        <div class="timeline-time__hour">9:00 AM</div>
+        <div class="timeline-time__duration">30 mins</div>
       </div>
       <div class="timeline-track">
         <div class="timeline-dot lunch"></div>
-        <div class="timeline-line" style="display:none;"></div>
+        <div class="timeline-line"></div>
       </div>
       <div class="timeline-content">
         <div class="timeline-block lunch-block">
           <div class="timeline-block__title">🍽️ Lunch Time</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9:30 AM — Science -->
+    <div class="timeline-item">
+      <div class="timeline-time">
+        <div class="timeline-time__hour">9:30 AM</div>
+        <div class="timeline-time__duration">45 mins</div>
+      </div>
+      <div class="timeline-track">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-block" style="cursor:pointer;" onclick="window.location.href='/task.html'">
+          <div class="timeline-block__title">
+            <span style="margin-right:6px;">🔬</span> Science: Ecosystems
+          </div>
+          <div class="timeline-block__desc">Review biology slides and complete the ecosystems worksheet.</div>
+          <div class="timeline-block__footer">
+            <span>1 worksheet</span>
+            <a href="/task.html">Start Science →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10:15 AM — Afternoon Break -->
+    <div class="timeline-item">
+      <div class="timeline-time">
+        <div class="timeline-time__hour">10:15 AM</div>
+        <div class="timeline-time__duration">10 mins</div>
+      </div>
+      <div class="timeline-track">
+        <div class="timeline-dot break"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-block break-block">
+          <div class="timeline-block__title">🧘 Afternoon Break</div>
+          <div class="timeline-block__desc">Recharge before your last task.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10:25 AM — Writing -->
+    <div class="timeline-item">
+      <div class="timeline-time">
+        <div class="timeline-time__hour">10:25 AM</div>
+        <div class="timeline-time__duration">30 mins</div>
+      </div>
+      <div class="timeline-track">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line" style="display:none;"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-block" style="cursor:pointer;" onclick="window.location.href='/task.html'">
+          <div class="timeline-block__title">
+            <span style="margin-right:6px;">✏️</span> Writing: Persuasive Essay
+          </div>
+          <div class="timeline-block__desc">Draft your persuasive essay on a topic of your choice. Focus on your thesis and supporting arguments.</div>
+          <div class="timeline-block__footer">
+            <span>1 essay draft</span>
+            <a href="/task.html">Start Writing →</a>
+          </div>
         </div>
       </div>
     </div>
